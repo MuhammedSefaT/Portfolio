@@ -8,9 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Interface\" />
-    <Folder Include="Mapping\" />
     <Folder Include="Service\" />
-    <Folder Include="ValidationRules\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,16 @@
+﻿using FluentValidation;
+using Portfolio.Common.Dtos;
+
+namespace Portfolio.Business.ValidationRules;
+
+public class ExperienceUpdateDtoValidator : AbstractValidator<ExperienceUpdateDto>
+{
+    public ExperienceUpdateDtoValidator()
+    {
+        RuleFor(x => x.Id).GreaterThan(0);
+        RuleFor(x => x.Name).NotEmpty().MaximumLength(250);
+        RuleFor(x => x.BusinessName).NotEmpty().MaximumLength(250);
+        RuleFor(x => x.Description).NotEmpty();
+        RuleFor(x => x.ExperienceId).GreaterThan(0);
+    }
+}

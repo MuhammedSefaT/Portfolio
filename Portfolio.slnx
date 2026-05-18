@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Portfolio.Business/Portfolio.Business.csproj" />
+  <Project Path="Portfolio.Common/Portfolio.Common.csproj" />
+  <Project Path="Portfolio.Core/Portfolio.Core.csproj" />
+  <Project Path="Portfolio.DataAccess/Portfolio.DataAccess.csproj" />
+  <Project Path="Portfolio.UI/Portfolio.UI.csproj" />
+</Solution>

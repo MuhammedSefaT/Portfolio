@@ -6,4 +6,22 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Interface\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Service\" />
+    <Folder Include="ValidationRules\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Portfolio.Common\Portfolio.Common.csproj" />
+    <ProjectReference Include="..\Portfolio.DataAccess\Portfolio.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

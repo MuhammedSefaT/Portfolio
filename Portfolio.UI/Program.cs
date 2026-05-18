@@ -1,6 +1,9 @@
+using Portfolio.Business.Extension;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddBusiness();
 
 var app = builder.Build();
 

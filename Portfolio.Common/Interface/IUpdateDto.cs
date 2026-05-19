@@ -2,4 +2,5 @@
 
 public interface IUpdateDto
 {
+    public int Id { get; }
 }

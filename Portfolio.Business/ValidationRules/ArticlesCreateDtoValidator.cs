@@ -3,7 +3,7 @@ using Portfolio.Common.Dtos;
 
 namespace Portfolio.Business.ValidationRules;
 
-public class ArticlesCreateDtoValidator : AbstractValidator<ArticlesCreateDto>
+public class ArticlesCreateDtoValidator : AbstractValidator<ArticleCreateDto>
 {
     public ArticlesCreateDtoValidator()
     {

@@ -2,7 +2,7 @@
 
 namespace Portfolio.Common.Dtos;
 
-public class ArticlesListDto : IListDto
+public class ArticleUpdateDto : IUpdateDto
 {
     public int Id { get; set; }
     public int CategoryId { get; set; }
@@ -11,6 +11,5 @@ public class ArticlesListDto : IListDto
     public string Description { get; set; } = null!;
     public int ViewCount { get; set; }
     public bool IsActive { get; set; }
-    public DateTime CreatedTime { get; set; }
-    public DateTime UpdatedTime { get; set; }
+    public DateTime UpdatedTime { get; set; } = DateTime.UtcNow;
 }

@@ -2,7 +2,7 @@
 
 namespace Portfolio.Common.Dtos;
 
-public class ArticlesCreateDto : ICreateDto
+public class ArticleCreateDto : ICreateDto
 {
     public int CategoryId { get; set; }
     public string Title { get; set; } = null!;

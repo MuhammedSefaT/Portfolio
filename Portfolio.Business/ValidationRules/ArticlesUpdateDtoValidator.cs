@@ -3,7 +3,7 @@ using Portfolio.Common.Dtos;
 
 namespace Portfolio.Business.ValidationRules;
 
-public class ArticlesUpdateDtoValidator : AbstractValidator<ArticlesUpdateDto>
+public class ArticlesUpdateDtoValidator : AbstractValidator<ArticleUpdateDto>
 {
     public ArticlesUpdateDtoValidator()
     {

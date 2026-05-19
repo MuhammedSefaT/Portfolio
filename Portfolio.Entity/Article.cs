@@ -1,6 +1,6 @@
 ﻿namespace Portfolio.Entity;
 
-public class Articles : BaseEntity
+public class Article : BaseEntity
 {
     public int CategoryId { get; set; }
     public string Title { get; set; } = null!;

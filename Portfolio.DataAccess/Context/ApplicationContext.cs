@@ -8,7 +8,7 @@ namespace Portfolio.DataAccess.Context;
 
 public class ApplicationContext : IdentityDbContext<AppUser, IdentityRole<int>, int>
 {
-    public DbSet<Articles> Articles { get; set; }
+    public DbSet<Article> Articles { get; set; }
     public DbSet<Banner> Banners { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Certificate> Certificates { get; set; }

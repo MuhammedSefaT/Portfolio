@@ -4,9 +4,9 @@ using Portfolio.Entity;
 
 namespace Portfolio.DataAccess.Configurations;
 
-public class ArticlesConfiguration : IEntityTypeConfiguration<Articles>
+public class ArticlesConfiguration : IEntityTypeConfiguration<Article>
 {
-    public void Configure(EntityTypeBuilder<Articles> builder)
+    public void Configure(EntityTypeBuilder<Article> builder)
     {
         builder.HasKey(x => x.Id);
 

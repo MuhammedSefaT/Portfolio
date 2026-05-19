@@ -8,8 +8,8 @@ public class ArticlesProfile : Profile
 {
     public ArticlesProfile()
     {
-        CreateMap<Articles, ArticlesCreateDto>().ReverseMap();
-        CreateMap<Articles, ArticlesUpdateDto>().ReverseMap();
-        CreateMap<Articles, ArticlesListDto>().ReverseMap();
+        CreateMap<Article, ArticleCreateDto>().ReverseMap();
+        CreateMap<Article, ArticleUpdateDto>().ReverseMap();
+        CreateMap<Article, ArticleListDto>().ReverseMap();
     }
 }

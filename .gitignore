@@ -1,26 +1,81 @@
-### Windows
-# Windows thumbnail cache files
-Thumbs.db
+### .NET ###
+# Derleme çıktıları
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
 
-# Folder config file
-[Dd]esktop.ini
+# Publish çıktıları
+[Pp]ublish/
+*.[Pp]ublish.xml
+*.publishsettings
+*.pubxml.user
+*.azurePubxml
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Kullanıcıya özel proje/çözüm dosyaları
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
 
-# Windows shortcuts
-*.lnk
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
 
-### VS Code
-# VSCode settings (keep shared configuration)
+# Test sonuçları ve kod kapsamı
+[Tt]est[Rr]esult*/
+TestResults/
+coverage*.json
+coverage*.xml
+coverage*.info
+*.coverage
+*.coveragexml
+
+### IDE ###
+# Visual Studio
+.vs/
+*.VisualState.xml
+*.DotSettings.user
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# VS Code (paylaşılan yapılandırma korunur)
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-# Local History for Visual Studio Code
 .history/
-
-# Built Visual Studio Code Extensions
 *.vsix
+
+### Node / Tailwind ###
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.npm/
+
+# Tailwind derleme çıktısı (build sırasında üretilir)
+**/wwwroot/css/app.css
+
+### İşletim sistemi ###
+# Windows
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+
+### Gizli bilgiler ###
+*.pfx
+*.key
+appsettings.*.local.json
+secrets.json

@@ -6,4 +6,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Tailwind çıktısı üretilen bir dosya; kaynak olarak derlemeye dahil edilmez -->
+  <ItemGroup>
+    <Content Remove="Styles\**" />
+    <None Include="Styles\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Entities\" />
+    <Folder Include="Core\Enums\" />
+    <Folder Include="Application\" />
+  </ItemGroup>
+
+  <Target Name="TailwindInstall" BeforeTargets="TailwindBuild" Condition="!Exists('$(MSBuildProjectDirectory)\node_modules')">
+    <Exec Command="npm install" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
+  <Target Name="TailwindBuild" BeforeTargets="BeforeBuild">
+    <Exec Command="npm run css:build" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
 </Project>

@@ -1,49 +1,62 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+@{
+    var baslik = ViewData["Title"] as string;
+    var sayfaBasligi = string.IsNullOrWhiteSpace(baslik)
+        ? "Muhammed Sefa Tayaz"
+        : $"{baslik} — Muhammed Sefa Tayaz";
+
+    var aciklama = ViewData["Description"] as string
+        ?? "Muhammed Sefa Tayaz — yazılım geliştirici. .NET Core ile arka uç servisleri ve çok kiracılı SaaS ürünleri geliştiriyorum.";
+
+    // Ana sayfa içeriği dikeyde ortalanır; uzun sayfalar ViewData ile bunu değiştirebilir.
+    var icerikHizalama = ViewData["MainAlign"] as string ?? "justify-center";
+}
+<!DOCTYPE html>
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Portfolyo.Web</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@sayfaBasligi</title>
+    <meta name="description" content="@aciklama" />
+    <meta name="author" content="Muhammed Sefa Tayaz" />
+    <meta name="theme-color" content="#FAFAFB" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://msefatayaz.com/" />
+    <meta property="og:title" content="@sayfaBasligi" />
+    <meta property="og:description" content="@aciklama" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='4' fill='%230F172A'/%3E%3Cpath d='M18 44V20h5l9 15 9-15h5v24h-5V29l-7 12h-4l-7-12v15z' fill='%23FAFAFB'/%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Portfolyo.Web.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Portfolyo.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+<body class="min-h-[100svh] font-sans text-ink antialiased selection:bg-ink selection:text-paper">
+
+    <div class="mx-auto flex min-h-[100svh] max-w-3xl flex-col px-6 py-7 sm:px-10 sm:py-9">
+
+        <header class="reveal d1 flex items-center justify-between gap-4 border-b border-hairline pb-6">
+            <a class="text-[15px] font-medium tracking-tight text-ink" asp-controller="Home" asp-action="Index">msefatayaz.com</a>
+        </header>
+
+        <main class="flex flex-1 flex-col @icerikHizalama py-16 sm:py-20">
             @RenderBody()
         </main>
+
+        <footer class="reveal d5 flex items-center justify-between gap-4 border-t border-hairline pt-6 text-[13px] text-muted">
+            <p>&copy; @DateTime.Now.Year Muhammed Sefa Tayaz</p>
+            <p>Türkiye</p>
+        </footer>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - Portfolyo.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

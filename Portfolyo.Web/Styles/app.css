@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Razor görünümlerindeki sınıfları tara (bin/obj hariç) */
+@source "../Views/**/*.cshtml";
+@source not "../bin";
+@source not "../obj";
+
+/* Tasarımın renk ve yazı tipi paleti */
+@theme {
+    --color-paper: #FAFAFB;
+    --color-ink: #0F172A;
+    --color-slate: #475569;
+    --color-muted: #64748B;
+    --color-hairline: #E4E7EC;
+    --color-royal: #1E3A8A;
+    --color-ember: #EA580C;
+
+    --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        background-color: var(--color-paper);
+        background-image: radial-gradient(820px 560px at 90% 106%, rgba(30, 58, 138, .11), transparent 70%);
+        background-repeat: no-repeat;
+    }
+
+    a:focus-visible {
+        outline: 2px solid var(--color-royal);
+        outline-offset: 4px;
+        border-radius: 1px;
+    }
+}
+
+/* Başlıklar için sıkı harf aralığı */
+.display {
+    letter-spacing: -.032em;
+    line-height: 1.05;
+}
+
+/* Açılışta tek bir sıralı giriş */
+.reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: reveal .8s cubic-bezier(.22, .61, .36, 1) forwards;
+}
+
+.d1 { animation-delay: .06s; }
+.d2 { animation-delay: .16s; }
+.d3 { animation-delay: .26s; }
+.d4 { animation-delay: .36s; }
+.d5 { animation-delay: .46s; }
+
+@keyframes reveal {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+
+    * {
+        transition: none !important;
+    }
+}

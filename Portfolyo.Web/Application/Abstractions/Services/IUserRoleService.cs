@@ -1,16 +1,18 @@
 using Portfolyo.Web.Application.Common.Results;
 using Portfolyo.Web.Application.DTOs.UserRoles;
+using Portfolyo.Web.Core.Entities;
 
 namespace Portfolyo.Web.Application.Abstractions.Services;
 
 /// <summary>
-/// Kullanıcı - rol atamaları. Bir atama "düzenlenmez", eklenir veya kaldırılır;
-/// bu yüzden ortak CRUD sözleşmesi yerine kendi metotlarını taşır.
+/// Kullanıcı - rol atamaları. Ortak CRUD IService'ten gelir;
+/// burada yalnızca bu entity'ye özel işler tanımlıdır.
 /// </summary>
-public interface IUserRoleService
+public interface IUserRoleService : IService<UserRole, UserRoleDto, UserRoleCreateDto, UserRoleUpdateDto>
 {
     /// <summary>Kullanıcının rollerini ad bilgileriyle birlikte döner.</summary>
-    Task<Result<IReadOnlyList<UserRoleDto>>> GetByUserAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<Result<IReadOnlyList<UserRoleDetailDto>>> GetByUserAsync(
+        Guid userId, CancellationToken cancellationToken = default);
 
     Task<Result<IReadOnlyList<Guid>>> GetRoleIdsAsync(Guid userId, CancellationToken cancellationToken = default);
 

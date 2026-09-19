@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using Portfolyo.Web.Application.Abstractions.Repositories;
 using Portfolyo.Web.Application.Abstractions.Services;
 using Portfolyo.Web.Application.Common.Results;
@@ -8,36 +9,38 @@ using Portfolyo.Web.Core.Enums;
 
 namespace Portfolyo.Web.Application.Services;
 
-public class RolePermissionService : IRolePermissionService
+public class RolePermissionService
+    : Service<RolePermission, RolePermissionDto, RolePermissionCreateDto, RolePermissionUpdateDto>,
+      IRolePermissionService
 {
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-
-    public RolePermissionService(IUnitOfWork unitOfWork, IMapper mapper)
+    public RolePermissionService(
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IEnumerable<IValidator<RolePermissionCreateDto>> createValidators,
+        IEnumerable<IValidator<RolePermissionUpdateDto>> updateValidators)
+        : base(unitOfWork, mapper, createValidators, updateValidators)
     {
-        _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
-    private IRepository<RolePermission> RolePermissions => _unitOfWork.Repository<RolePermission>();
+    protected override string NotFoundMessage => "Yetki kaydı bulunamadı.";
 
     public async Task<Result<IReadOnlyList<RolePermissionDto>>> GetByRoleAsync(
         Guid roleId, CancellationToken cancellationToken = default)
     {
-        if (!await _unitOfWork.Repository<Role>().AnyAsync(x => x.Id == roleId, cancellationToken))
+        if (!await UnitOfWork.Repository<Role>().AnyAsync(x => x.Id == roleId, cancellationToken))
         {
             return Result<IReadOnlyList<RolePermissionDto>>.NotFound("Rol bulunamadı.");
         }
 
-        var items = await RolePermissions.GetWhereAsync(x => x.RoleId == roleId, cancellationToken);
+        var items = await Repository.GetWhereAsync(x => x.RoleId == roleId, cancellationToken);
 
         return Result<IReadOnlyList<RolePermissionDto>>.Success(
-            _mapper.Map<List<RolePermissionDto>>(items.OrderBy(x => x.Permission)));
+            Mapper.Map<List<RolePermissionDto>>(items.OrderBy(x => x.Permission)));
     }
 
     public async Task<Result> AssignAsync(RolePermissionAssignDto dto, CancellationToken cancellationToken = default)
     {
-        if (!await _unitOfWork.Repository<Role>().AnyAsync(x => x.Id == dto.RoleId, cancellationToken))
+        if (!await UnitOfWork.Repository<Role>().AnyAsync(x => x.Id == dto.RoleId, cancellationToken))
         {
             return Result.NotFound("Rol bulunamadı.");
         }
@@ -45,14 +48,12 @@ public class RolePermissionService : IRolePermissionService
         var requested = (dto.Permissions ?? Array.Empty<Permission>()).Distinct().ToList();
 
         // Enum'da tanımlı olmayan bir değer gönderilmişse hiçbir şey yazılmaz.
-        var undefined = requested.FirstOrDefault(permission => !Enum.IsDefined(permission));
-
-        if (undefined != default)
+        if (requested.Any(permission => !Enum.IsDefined(permission)))
         {
             return Result.Invalid(nameof(dto.Permissions), "Tanımlı olmayan bir yetki gönderildi.");
         }
 
-        var current = await RolePermissions.GetWhereAsync(x => x.RoleId == dto.RoleId, cancellationToken);
+        var current = await Repository.GetWhereAsync(x => x.RoleId == dto.RoleId, cancellationToken);
         var currentPermissions = current.Select(x => x.Permission).ToList();
 
         var toAdd = requested.Except(currentPermissions).ToList();
@@ -65,18 +66,18 @@ public class RolePermissionService : IRolePermissionService
 
         if (toRemove.Count > 0)
         {
-            await RolePermissions.DeleteWhereAsync(
+            await Repository.DeleteWhereAsync(
                 x => x.RoleId == dto.RoleId && toRemove.Contains(x.Permission), cancellationToken);
         }
 
         if (toAdd.Count > 0)
         {
-            await RolePermissions.AddRangeAsync(
+            await Repository.AddRangeAsync(
                 toAdd.Select(permission => new RolePermission { RoleId = dto.RoleId, Permission = permission }),
                 cancellationToken);
         }
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        await UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success("Yetkiler güncellendi.");
     }
@@ -84,7 +85,7 @@ public class RolePermissionService : IRolePermissionService
     public async Task<Result<IReadOnlyList<Permission>>> GetByUserAsync(
         Guid userId, CancellationToken cancellationToken = default)
     {
-        var assignments = await _unitOfWork.Repository<UserRole>()
+        var assignments = await UnitOfWork.Repository<UserRole>()
             .GetWhereAsync(x => x.UserId == userId, cancellationToken);
 
         if (assignments.Count == 0)
@@ -94,8 +95,7 @@ public class RolePermissionService : IRolePermissionService
 
         var roleIds = assignments.Select(x => x.RoleId).ToHashSet();
 
-        var rolePermissions = await RolePermissions
-            .GetWhereAsync(x => roleIds.Contains(x.RoleId), cancellationToken);
+        var rolePermissions = await Repository.GetWhereAsync(x => roleIds.Contains(x.RoleId), cancellationToken);
 
         IReadOnlyList<Permission> permissions = rolePermissions
             .Select(x => x.Permission)
@@ -114,5 +114,36 @@ public class RolePermissionService : IRolePermissionService
         return permissions.IsFailure
             ? permissions.CarryFailure<bool>()
             : Result<bool>.Success(permissions.Data!.Contains(permission));
+    }
+
+    protected override Task<Result> OnCreatingAsync(
+        RolePermissionCreateDto dto, RolePermission entity, CancellationToken cancellationToken)
+        => EnsureAssignableAsync(dto.RoleId, dto.Permission, null, cancellationToken);
+
+    protected override Task<Result> OnUpdatingAsync(
+        RolePermissionUpdateDto dto, RolePermission entity, CancellationToken cancellationToken)
+        => EnsureAssignableAsync(dto.RoleId, dto.Permission, dto.Id, cancellationToken);
+
+    /// <summary>
+    /// Rol var mı, aynı yetki role zaten verilmiş mi?
+    /// Generic CRUD üzerinden gelen tek kayıtlı ekleme/güncelleme de bu kontrolden geçer.
+    /// </summary>
+    private async Task<Result> EnsureAssignableAsync(
+        Guid roleId, Permission permission, Guid? excludedId, CancellationToken cancellationToken)
+    {
+        if (!await UnitOfWork.Repository<Role>().AnyAsync(x => x.Id == roleId, cancellationToken))
+        {
+            return Result.NotFound("Rol bulunamadı.");
+        }
+
+        var duplicate = await Repository.AnyAsync(
+            x => x.RoleId == roleId
+                 && x.Permission == permission
+                 && (!excludedId.HasValue || x.Id != excludedId.Value),
+            cancellationToken);
+
+        return duplicate
+            ? Result.Conflict("Bu yetki role zaten verilmiş.")
+            : Result.Success();
     }
 }

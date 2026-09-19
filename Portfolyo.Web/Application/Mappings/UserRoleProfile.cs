@@ -1,21 +1,24 @@
 using AutoMapper;
-using Portfolyo.Web.Application.DTOs.RolePermissions;
+using Portfolyo.Web.Application.DTOs.UserRoles;
 using Portfolyo.Web.Core.Entities;
 
 namespace Portfolyo.Web.Application.Mappings;
 
-public class RolePermissionProfile : Profile
+public class UserRoleProfile : Profile
 {
-    public RolePermissionProfile()
+    public UserRoleProfile()
     {
-        CreateMap<RolePermission, RolePermissionDto>();
+        CreateMap<UserRole, UserRoleDto>();
 
-        CreateMap<RolePermissionCreateDto, RolePermission>()
+        CreateMap<UserRoleCreateDto, UserRole>()
             .ForMember(destination => destination.Id, options => options.Ignore())
+            .ForMember(destination => destination.AssignedAt, options => options.Ignore())
             .ForMember(destination => destination.CreatedAt, options => options.Ignore())
             .ForMember(destination => destination.UpdatedAt, options => options.Ignore());
 
-        CreateMap<RolePermissionUpdateDto, RolePermission>()
+        // Atama tarihi güncellemede korunur.
+        CreateMap<UserRoleUpdateDto, UserRole>()
+            .ForMember(destination => destination.AssignedAt, options => options.Ignore())
             .ForMember(destination => destination.CreatedAt, options => options.Ignore())
             .ForMember(destination => destination.UpdatedAt, options => options.Ignore());
     }

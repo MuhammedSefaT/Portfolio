@@ -1,14 +1,16 @@
 using Portfolyo.Web.Application.Common.Results;
 using Portfolyo.Web.Application.DTOs.RolePermissions;
+using Portfolyo.Web.Core.Entities;
 using Portfolyo.Web.Core.Enums;
 
 namespace Portfolyo.Web.Application.Abstractions.Services;
 
 /// <summary>
-/// Rol - yetki atamaları. Atama düzenlenmez, toplu olarak belirlenir;
-/// bu yüzden ortak CRUD sözleşmesi yerine kendi metotlarını taşır.
+/// Rol - yetki atamaları. Ortak CRUD IService'ten gelir;
+/// burada yalnızca bu entity'ye özel işler tanımlıdır.
 /// </summary>
 public interface IRolePermissionService
+    : IService<RolePermission, RolePermissionDto, RolePermissionCreateDto, RolePermissionUpdateDto>
 {
     Task<Result<IReadOnlyList<RolePermissionDto>>> GetByRoleAsync(
         Guid roleId, CancellationToken cancellationToken = default);

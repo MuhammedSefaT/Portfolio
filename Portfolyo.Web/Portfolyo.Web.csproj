@@ -16,6 +16,10 @@
     <Folder Include="Core\Enums\" />
     <Folder Include="Application\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="16.2.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+  </ItemGroup>
 
   <Target Name="TailwindInstall" BeforeTargets="TailwindBuild" Condition="!Exists('$(MSBuildProjectDirectory)\node_modules')">
     <Exec Command="npm install" WorkingDirectory="$(MSBuildProjectDirectory)" />

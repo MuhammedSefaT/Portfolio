@@ -1,3 +1,5 @@
+using Portfolyo.Web.Application.Common;
+
 namespace Portfolyo.Web.Application.DTOs.Roles;
 
 /// <summary>
@@ -6,4 +8,4 @@ namespace Portfolyo.Web.Application.DTOs.Roles;
 public record RoleUpdateDto(
     Guid Id,
     string Name,
-    string? Description);
+    string? Description) : IHasId;

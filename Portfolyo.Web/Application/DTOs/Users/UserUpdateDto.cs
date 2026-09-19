@@ -1,3 +1,5 @@
+using Portfolyo.Web.Application.Common;
+
 namespace Portfolyo.Web.Application.DTOs.Users;
 
 /// <summary>
@@ -10,4 +12,4 @@ public record UserUpdateDto(
     string FirstName,
     string LastName,
     string? ProfileImagePath,
-    bool IsActive);
+    bool IsActive) : IHasId;

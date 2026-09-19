@@ -1,3 +1,4 @@
+using Portfolyo.Web.Application.Extensions;
 using Portfolyo.Web.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,9 @@ builder.Services.AddControllersWithViews();
 
 // JSON dosya deposu, repository'ler ve UnitOfWork
 builder.Services.AddInfrastructure(builder.Environment);
+
+// AutoMapper, FluentValidation ve generic servis
+builder.Services.AddApplication();
 
 var app = builder.Build();
 

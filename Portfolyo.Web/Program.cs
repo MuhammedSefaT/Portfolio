@@ -1,4 +1,5 @@
 using Portfolyo.Web.Application.Extensions;
+using Portfolyo.Web.Extensions;
 using Portfolyo.Web.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ builder.Services.AddInfrastructure(builder.Environment, builder.Configuration);
 
 // AutoMapper, FluentValidation ve generic servis
 builder.Services.AddApplication();
+
+// Çerez tabanlı kimlik doğrulama ve yetki politikaları
+builder.Services.AddCookieAuthentication(builder.Environment);
 
 var app = builder.Build();
 
@@ -28,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -1,0 +1,42 @@
+@model Portfolyo.Web.Application.DTOs.Auth.LoginDto
+@{
+    ViewData["Title"] = "Giriş";
+    ViewData["Description"] = "Yönetim paneli girişi.";
+}
+
+<h1 class="reveal d2 display text-[clamp(1.6rem,4.2vw,2.2rem)] font-semibold">Giriş</h1>
+<p class="reveal d2 mt-3 text-[15px] text-muted">Yönetim paneline erişmek için giriş yapın.</p>
+
+<form class="reveal d3 mt-8 max-w-sm" asp-controller="Account" asp-action="Login"
+      asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="mb-5 space-y-1 text-[14px] text-ember"></div>
+
+    <div class="border-t border-hairline pt-6">
+        <label class="block text-[14px] font-medium text-ink" asp-for="UserNameOrEmail">Kullanıcı adı veya e-posta</label>
+        <input class="mt-2 w-full border-b border-hairline bg-transparent pb-2 text-[15px] text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-royal"
+               asp-for="UserNameOrEmail" autocomplete="username" autofocus placeholder="sefa" />
+        <span class="mt-1 block text-[13px] text-ember" asp-validation-for="UserNameOrEmail"></span>
+    </div>
+
+    <div class="mt-6">
+        <label class="block text-[14px] font-medium text-ink" asp-for="Password">Parola</label>
+        <input class="mt-2 w-full border-b border-hairline bg-transparent pb-2 text-[15px] text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-royal"
+               asp-for="Password" type="password" autocomplete="current-password" placeholder="••••••••" />
+        <span class="mt-1 block text-[13px] text-ember" asp-validation-for="Password"></span>
+    </div>
+
+    <label class="mt-6 flex items-center gap-2.5 text-[14px] text-slate">
+        <input class="h-4 w-4 rounded border-hairline text-royal accent-royal" asp-for="RememberMe" />
+        <span>Beni hatırla</span>
+    </label>
+
+    <button class="mt-8 w-full bg-ink px-5 py-3 text-[15px] font-medium text-paper transition-colors hover:bg-royal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-royal"
+            type="submit">
+        Giriş yap
+    </button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

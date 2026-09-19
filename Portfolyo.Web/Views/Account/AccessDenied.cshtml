@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Yetkisiz Erişim";
+    ViewData["MainAlign"] = "justify-start";
+}
+
+<h1 class="reveal d2 display text-[clamp(1.6rem,4.2vw,2.2rem)] font-semibold">Yetkisiz erişim</h1>
+<p class="reveal d3 mt-6 max-w-[52ch] text-[17px] leading-[1.65] text-slate">
+    Bu sayfayı görüntülemek için gereken yetkiye sahip değilsiniz.
+</p>
+
+<div class="reveal d4 mt-8">
+    <a class="text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
+       asp-controller="Home" asp-action="Index">Ana sayfaya dön</a>
+</div>

@@ -19,6 +19,7 @@ public static class ApplicationServiceRegistration
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
         // Controller'lar generic servisi değil, entity'nin kendi servisini kullanır.
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IUserRoleService, UserRoleService>();

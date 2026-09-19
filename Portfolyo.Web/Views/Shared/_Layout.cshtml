@@ -58,11 +58,8 @@
 
     <header class="sticky top-0 z-40 bg-paper/90 backdrop-blur-sm">
 
-        @* Sayfanın üstünde ince renkli şerit *@
-        <div class="h-[3px] w-full bg-gradient-to-r from-royal via-royal to-ember" aria-hidden="true"></div>
-
         <div class="border-b border-hairline">
-            <div class="mx-auto flex h-16 max-w-4xl items-stretch justify-between gap-4 px-6 sm:px-10">
+            <div class="mx-auto flex h-16 max-w-5xl items-stretch justify-between gap-4 px-6 sm:px-10">
 
                 <a class="group flex items-center gap-2.5" asp-controller="Home" asp-action="Index" aria-label="Ana sayfa">
                     <span class="grid h-8 w-8 shrink-0 place-items-center bg-ink text-[13px] font-semibold tracking-tight text-paper transition-colors group-hover:bg-royal"
@@ -110,13 +107,13 @@
     </header>
 
     <main id="icerik" class="flex-1">
-        <div class="mx-auto w-full max-w-4xl px-6 py-16 sm:px-10 sm:py-20">
+        <div class="mx-auto w-full max-w-5xl px-6 py-12 sm:px-10 sm:py-16">
             @RenderBody()
         </div>
     </main>
 
     <footer class="mt-auto bg-ink text-paper">
-        <div class="mx-auto max-w-4xl px-6 py-12 sm:px-10 sm:py-14">
+        <div class="mx-auto max-w-5xl px-6 py-12 sm:px-10 sm:py-14">
 
             <div class="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
 

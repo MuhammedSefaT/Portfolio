@@ -2,6 +2,8 @@ using Portfolyo.Web.Application.Abstractions.Repositories;
 using Portfolyo.Web.Infrastructure.Persistence;
 using Portfolyo.Web.Infrastructure.Persistence.Json;
 using Portfolyo.Web.Infrastructure.Persistence.Repositories;
+using Portfolyo.Web.Infrastructure.Services;
+using IApplicationPasswordHasher = Portfolyo.Web.Application.Abstractions.Services.IPasswordHasher;
 
 namespace Portfolyo.Web.Infrastructure.Extensions;
 
@@ -28,6 +30,8 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<JsonFileStore>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        services.AddSingleton<IApplicationPasswordHasher, PasswordHasher>();
 
         return services;
     }

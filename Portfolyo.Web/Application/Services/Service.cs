@@ -3,16 +3,16 @@ using FluentValidation;
 using Portfolyo.Web.Application.Abstractions.Repositories;
 using Portfolyo.Web.Application.Abstractions.Services;
 using Portfolyo.Web.Application.Common;
-using Portfolyo.Web.Application.Common.Exceptions;
+using Portfolyo.Web.Application.Common.Results;
 using Portfolyo.Web.Core.Entities;
 
 namespace Portfolyo.Web.Application.Services;
 
 /// <summary>
-/// IService'in ortak implementasyonu. Entity'ye özel kural gerektiğinde
-/// bu sınıf miras alınıp ilgili metot override edilir.
+/// IService'in ortak implementasyonu. Entity'ye özel servisler bu sınıfı miras alır;
+/// ek kurallar için OnCreating / OnUpdating / OnDeleting kancalarını kullanır.
 /// </summary>
-public class Service<TEntity, TDto, TCreateDto, TUpdateDto> : IService<TEntity, TDto, TCreateDto, TUpdateDto>
+public abstract class Service<TEntity, TDto, TCreateDto, TUpdateDto> : IService<TEntity, TDto, TCreateDto, TUpdateDto>
     where TEntity : BaseEntity
     where TUpdateDto : IHasId
 {
@@ -23,7 +23,7 @@ public class Service<TEntity, TDto, TCreateDto, TUpdateDto> : IService<TEntity, 
     private readonly IEnumerable<IValidator<TCreateDto>> _createValidators;
     private readonly IEnumerable<IValidator<TUpdateDto>> _updateValidators;
 
-    public Service(
+    protected Service(
         IUnitOfWork unitOfWork,
         IMapper mapper,
         IEnumerable<IValidator<TCreateDto>> createValidators,
@@ -37,81 +37,147 @@ public class Service<TEntity, TDto, TCreateDto, TUpdateDto> : IService<TEntity, 
 
     protected IRepository<TEntity> Repository => UnitOfWork.Repository<TEntity>();
 
-    public virtual async Task<IReadOnlyList<TDto>> GetAllAsync(CancellationToken cancellationToken = default)
+    /// <summary>Kayıt bulunamadığında dönecek mesaj; alt sınıflar özelleştirebilir.</summary>
+    protected virtual string NotFoundMessage => "Kayıt bulunamadı.";
+
+    public virtual async Task<Result<IReadOnlyList<TDto>>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         var entities = await Repository.GetAllAsync(cancellationToken);
-        return Mapper.Map<List<TDto>>(entities);
+        return Result<IReadOnlyList<TDto>>.Success(Mapper.Map<List<TDto>>(entities));
     }
 
-    public virtual async Task<IReadOnlyList<TDto>> GetWhereAsync(
+    public virtual async Task<Result<IReadOnlyList<TDto>>> GetWhereAsync(
         Func<TEntity, bool> predicate, CancellationToken cancellationToken = default)
     {
         var entities = await Repository.GetWhereAsync(predicate, cancellationToken);
-        return Mapper.Map<List<TDto>>(entities);
+        return Result<IReadOnlyList<TDto>>.Success(Mapper.Map<List<TDto>>(entities));
     }
 
-    public virtual async Task<TDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task<Result<TDto>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await Repository.GetByIdAsync(id, cancellationToken);
-        return entity is null ? default : Mapper.Map<TDto>(entity);
+
+        return entity is null
+            ? Result<TDto>.NotFound(NotFoundMessage)
+            : Result<TDto>.Success(Mapper.Map<TDto>(entity));
     }
 
-    public virtual Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
-        => Repository.AnyAsync(x => x.Id == id, cancellationToken);
+    public virtual async Task<Result<bool>> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+        => Result<bool>.Success(await Repository.AnyAsync(x => x.Id == id, cancellationToken));
 
-    public virtual Task<int> CountAsync(CancellationToken cancellationToken = default)
-        => Repository.CountAsync(cancellationToken: cancellationToken);
+    public virtual async Task<Result<int>> CountAsync(CancellationToken cancellationToken = default)
+        => Result<int>.Success(await Repository.CountAsync(cancellationToken: cancellationToken));
 
-    public virtual async Task<TDto> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default)
+    public virtual async Task<Result<TDto>> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default)
     {
-        await ValidateAsync(_createValidators, dto, cancellationToken);
+        var validation = await ValidateAsync(_createValidators, dto, cancellationToken);
+
+        if (validation.IsFailure)
+        {
+            return validation.CarryFailure<TDto>();
+        }
 
         var entity = Mapper.Map<TEntity>(dto);
+
+        // Alt sınıfın ek kuralları (ör. parola hash'leme, tekillik denetimi).
+        var hook = await OnCreatingAsync(dto, entity, cancellationToken);
+
+        if (hook.IsFailure)
+        {
+            return hook.CarryFailure<TDto>();
+        }
 
         await Repository.AddAsync(entity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Mapper.Map<TDto>(entity);
+        return Result<TDto>.Success(Mapper.Map<TDto>(entity));
     }
 
-    public virtual async Task<TDto> UpdateAsync(TUpdateDto dto, CancellationToken cancellationToken = default)
+    public virtual async Task<Result<TDto>> UpdateAsync(TUpdateDto dto, CancellationToken cancellationToken = default)
     {
-        await ValidateAsync(_updateValidators, dto, cancellationToken);
+        var validation = await ValidateAsync(_updateValidators, dto, cancellationToken);
 
-        var entity = await Repository.GetByIdAsync(dto.Id, cancellationToken)
-                     ?? throw NotFoundException.For<TEntity>(dto.Id);
+        if (validation.IsFailure)
+        {
+            return validation.CarryFailure<TDto>();
+        }
+
+        var entity = await Repository.GetByIdAsync(dto.Id, cancellationToken);
+
+        if (entity is null)
+        {
+            return Result<TDto>.NotFound(NotFoundMessage);
+        }
 
         // DTO mevcut kaydın üzerine yazılır; DTO'da olmayan alanlar (ör. PasswordHash) korunur.
         Mapper.Map(dto, entity);
 
+        var hook = await OnUpdatingAsync(dto, entity, cancellationToken);
+
+        if (hook.IsFailure)
+        {
+            // Kural ihlali varsa bellekteki değişiklik diske yazılmadan atılır.
+            UnitOfWork.DiscardChanges();
+            return hook.CarryFailure<TDto>();
+        }
+
         await Repository.UpdateAsync(entity, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Mapper.Map<TDto>(entity);
+        return Result<TDto>.Success(Mapper.Map<TDto>(entity));
     }
 
-    public virtual async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public virtual async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        if (!await Repository.DeleteAsync(id, cancellationToken))
+        var entity = await Repository.GetByIdAsync(id, cancellationToken);
+
+        if (entity is null)
         {
-            return false;
+            return Result.NotFound(NotFoundMessage);
         }
 
+        var hook = await OnDeletingAsync(entity, cancellationToken);
+
+        if (hook.IsFailure)
+        {
+            return hook;
+        }
+
+        await Repository.DeleteAsync(id, cancellationToken);
         await UnitOfWork.SaveChangesAsync(cancellationToken);
-        return true;
+
+        return Result.Success();
     }
 
-    private static async Task ValidateAsync<TInput>(
+    /// <summary>Kayıt eklenmeden önce çalışır. Başarısız dönerse kayıt oluşturulmaz.</summary>
+    protected virtual Task<Result> OnCreatingAsync(TCreateDto dto, TEntity entity, CancellationToken cancellationToken)
+        => Task.FromResult(Result.Success());
+
+    /// <summary>Kayıt güncellenmeden önce çalışır. Başarısız dönerse güncelleme yapılmaz.</summary>
+    protected virtual Task<Result> OnUpdatingAsync(TUpdateDto dto, TEntity entity, CancellationToken cancellationToken)
+        => Task.FromResult(Result.Success());
+
+    /// <summary>Kayıt silinmeden önce çalışır. Başarısız dönerse silme yapılmaz.</summary>
+    protected virtual Task<Result> OnDeletingAsync(TEntity entity, CancellationToken cancellationToken)
+        => Task.FromResult(Result.Success());
+
+    private static async Task<Result<bool>> ValidateAsync<TInput>(
         IEnumerable<IValidator<TInput>> validators, TInput input, CancellationToken cancellationToken)
     {
+        var errors = new List<ResultError>();
+
         foreach (var validator in validators)
         {
-            var result = await validator.ValidateAsync(input, cancellationToken);
+            var validation = await validator.ValidateAsync(input, cancellationToken);
 
-            if (!result.IsValid)
+            if (!validation.IsValid)
             {
-                throw new ValidationException(result.Errors);
+                errors.AddRange(validation.Errors.Select(x => new ResultError(x.PropertyName, x.ErrorMessage)));
             }
         }
+
+        return errors.Count == 0
+            ? Result<bool>.Success(true)
+            : Result<bool>.Invalid(errors);
     }
 }

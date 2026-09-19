@@ -28,7 +28,8 @@ public interface IRepository<T> where T : BaseEntity
 
     Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
-    Task UpdateAsync(T entity, CancellationToken cancellationToken = default);
+    /// <summary>Kayıt bulunamazsa false döner.</summary>
+    Task<bool> UpdateAsync(T entity, CancellationToken cancellationToken = default);
 
     /// <summary>Kayıt bulunamazsa false döner.</summary>
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);

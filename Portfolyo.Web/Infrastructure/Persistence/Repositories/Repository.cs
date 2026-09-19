@@ -1,5 +1,4 @@
 using Portfolyo.Web.Application.Abstractions.Repositories;
-using Portfolyo.Web.Application.Common.Exceptions;
 using Portfolyo.Web.Core.Entities;
 using Portfolyo.Web.Infrastructure.Persistence.Json;
 
@@ -74,14 +73,14 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         }
     }
 
-    public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
+    public async Task<bool> UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         var items = await Store.GetCollectionAsync<T>(cancellationToken);
         var index = items.FindIndex(x => x.Id == entity.Id);
 
         if (index < 0)
         {
-            throw NotFoundException.For<T>(entity.Id);
+            return false;
         }
 
         entity.CreatedAt = items[index].CreatedAt;
@@ -89,6 +88,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
         items[index] = entity;
         Store.MarkDirty<T>();
+        return true;
     }
 
     public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)

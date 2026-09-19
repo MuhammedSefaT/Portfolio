@@ -8,7 +8,8 @@ namespace Portfolyo.Web.Application.Extensions;
 public static class ApplicationServiceRegistration
 {
     /// <summary>
-    /// AutoMapper profillerini, FluentValidation doğrulayıcılarını ve generic servisi kaydeder.
+    /// AutoMapper profillerini, FluentValidation doğrulayıcılarını ve
+    /// entity bazlı servisleri kaydeder.
     /// </summary>
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
@@ -17,8 +18,11 @@ public static class ApplicationServiceRegistration
         services.AddAutoMapper(configuration => configuration.AddMaps(assembly));
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 
-        // Açık generic kayıt: her entity için ayrı satır yazmaya gerek kalmaz.
-        services.AddScoped(typeof(IService<,,,>), typeof(Service<,,,>));
+        // Controller'lar generic servisi değil, entity'nin kendi servisini kullanır.
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<IUserRoleService, UserRoleService>();
+        services.AddScoped<IRolePermissionService, RolePermissionService>();
 
         return services;
     }

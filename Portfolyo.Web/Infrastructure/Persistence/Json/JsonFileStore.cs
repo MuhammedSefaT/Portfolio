@@ -77,11 +77,9 @@ public sealed class JsonFileStore : IDisposable
     /// <summary>Kaydedilmemiş değişiklikleri atar; koleksiyonlar tekrar diskten okunur.</summary>
     public void DiscardChanges()
     {
-        foreach (var type in _dirtyTypes)
-        {
-            _collections.Remove(type);
-        }
-
+        // Tüm önbellek boşaltılır: kaydedilmemiş bir değişiklik henüz "kirli" olarak
+        // işaretlenmemiş olsa bile bellekte kalmasın.
+        _collections.Clear();
         _dirtyTypes.Clear();
     }
 

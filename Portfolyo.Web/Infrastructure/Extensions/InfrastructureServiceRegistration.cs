@@ -2,6 +2,7 @@ using Portfolyo.Web.Application.Abstractions.Repositories;
 using Portfolyo.Web.Infrastructure.Persistence;
 using Portfolyo.Web.Infrastructure.Persistence.Json;
 using Portfolyo.Web.Infrastructure.Persistence.Repositories;
+using Portfolyo.Web.Infrastructure.Persistence.Seed;
 using Portfolyo.Web.Infrastructure.Services;
 using IApplicationPasswordHasher = Portfolyo.Web.Application.Abstractions.Services.IPasswordHasher;
 
@@ -16,8 +17,16 @@ public static class InfrastructureServiceRegistration
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         IHostEnvironment environment,
+        IConfiguration configuration,
         string dataFolder = "App_Data/json")
-        => services.AddInfrastructure(Path.Combine(environment.ContentRootPath, dataFolder));
+    {
+        services.AddInfrastructure(Path.Combine(environment.ContentRootPath, dataFolder));
+
+        // Yönetici hesabı ayarları; parola user-secrets veya ortam değişkeninden gelir.
+        services.Configure<SeedOptions>(configuration.GetSection("Seed"));
+
+        return services;
+    }
 
     /// <summary>
     /// Veri klasörünün mutlak yolu verilerek kayıt yapar.
@@ -32,6 +41,9 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddSingleton<IApplicationPasswordHasher, PasswordHasher>();
+
+        services.AddOptions<SeedOptions>();
+        services.AddScoped<DataSeeder>();
 
         return services;
     }

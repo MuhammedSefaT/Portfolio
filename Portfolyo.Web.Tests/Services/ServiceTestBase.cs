@@ -22,10 +22,17 @@ public abstract class ServiceTestBase : IDisposable
         services.AddInfrastructure(DataPath);
         services.AddApplication();
 
+        Yapilandir(services);
+
         _provider = services.BuildServiceProvider();
     }
 
     protected string DataPath { get; }
+
+    /// <summary>Testin kendi kayıtlarını eklemesi veya ayar değiştirmesi için.</summary>
+    protected virtual void Yapilandir(IServiceCollection services)
+    {
+    }
 
     protected IServiceScope YeniIstek() => _provider.CreateScope();
 

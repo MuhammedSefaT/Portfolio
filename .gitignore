@@ -74,6 +74,10 @@ $RECYCLE.BIN/
 # macOS
 .DS_Store
 
+### Uygulama verisi ###
+# Kullanici kayitlari parola hash'i icerir; depoya girmemeli.
+**/App_Data/json/users.json
+
 ### Gizli bilgiler ###
 *.pfx
 *.key

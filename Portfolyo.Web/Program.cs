@@ -7,12 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // JSON dosya deposu, repository'ler ve UnitOfWork
-builder.Services.AddInfrastructure(builder.Environment);
+builder.Services.AddInfrastructure(builder.Environment, builder.Configuration);
 
 // AutoMapper, FluentValidation ve generic servis
 builder.Services.AddApplication();
 
 var app = builder.Build();
+
+// Admin rolü, yetkiler ve yönetici kullanıcısı (ilk çalıştırmada oluşur)
+await app.UseDataSeedAsync();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

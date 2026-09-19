@@ -75,8 +75,12 @@ $RECYCLE.BIN/
 .DS_Store
 
 ### Uygulama verisi ###
-# Kullanici kayitlari parola hash'i icerir; depoya girmemeli.
+# Seed ile uretilen kimlik/yetki verisi; her calistirmada yeniden olusur.
+# users.json ayrica parola hash'i icerir.
 **/App_Data/json/users.json
+**/App_Data/json/roles.json
+**/App_Data/json/userRoles.json
+**/App_Data/json/rolePermissions.json
 
 ### Gizli bilgiler ###
 *.pfx

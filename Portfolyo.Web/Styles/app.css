@@ -16,11 +16,13 @@
     --color-ember: #EA580C;
 
     --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {
     html {
         -webkit-text-size-adjust: 100%;
+        scroll-behavior: smooth;
     }
 
     body {
@@ -29,7 +31,9 @@
         background-repeat: no-repeat;
     }
 
-    a:focus-visible {
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
         outline: 2px solid var(--color-royal);
         outline-offset: 4px;
         border-radius: 1px;
@@ -40,6 +44,29 @@
 .display {
     letter-spacing: -.032em;
     line-height: 1.05;
+}
+
+/*
+ * Bölüm etiketleri C# ad alanı biçiminde yazılır: msefatayaz.about
+ * Kök soluk, yaprak koyu; hangi bölümde olduğun tek bakışta okunur.
+ */
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: .75rem;
+    letter-spacing: .04em;
+    color: var(--color-muted);
+}
+
+.eyebrow b {
+    font-weight: 500;
+    color: var(--color-ink);
+}
+
+/* Sayısal/teknik bilgiler için yardımcı yazı tipi */
+.meta {
+    font-family: var(--font-mono);
+    font-size: .8125rem;
+    letter-spacing: .01em;
 }
 
 /* Açılışta tek bir sıralı giriş */
@@ -62,11 +89,34 @@
     }
 }
 
+/*
+ * Kaydırınca beliren bölümler.
+ * Gizleme yalnızca JavaScript çalışıyorsa uygulanır; aksi hâlde içerik
+ * ekranda kalır (no-js sınıfı belge yüklenirken kaldırılır).
+ */
+html:not(.no-js) [data-reveal] {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s cubic-bezier(.22, .61, .36, 1),
+                transform .7s cubic-bezier(.22, .61, .36, 1);
+}
+
+html:not(.no-js) [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .reveal {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .reveal,
+    html:not(.no-js) [data-reveal] {
         opacity: 1;
         transform: none;
         animation: none;
+        transition: none;
     }
 
     * {

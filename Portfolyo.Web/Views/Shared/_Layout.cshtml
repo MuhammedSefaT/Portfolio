@@ -5,13 +5,13 @@
         : $"{baslik} — Muhammed Sefa Tayaz";
 
     var aciklama = ViewData["Description"] as string
-        ?? "Muhammed Sefa Tayaz — yazılım geliştirici. .NET Core ile arka uç servisleri ve çok kiracılı SaaS ürünleri geliştiriyorum.";
+        ?? "Muhammed Sefa Tayaz — yazılım geliştirici. .NET ile çok kiracılı SaaS ürünlerinin arka ucunu kuruyorum.";
 
-    // Ana sayfa içeriği dikeyde ortalanır; uzun sayfalar ViewData ile bunu değiştirebilir.
+    // Kısa sayfalar dikeyde ortalanır; uzun sayfalar ViewData ile bunu değiştirir.
     var icerikHizalama = ViewData["MainAlign"] as string ?? "justify-center";
 }
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="no-js">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,27 +31,40 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
+
+    @* Gizleme kuralları yalnızca JavaScript varken uygulansın diye en başta çalışır. *@
+    <script>document.documentElement.classList.remove('no-js');</script>
 </head>
 <body class="min-h-[100svh] font-sans text-ink antialiased selection:bg-ink selection:text-paper">
 
-    <div class="mx-auto flex min-h-[100svh] max-w-3xl flex-col px-6 py-7 sm:px-10 sm:py-9">
+    <a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-[14px] focus:text-paper"
+       href="#icerik">İçeriğe geç</a>
 
-        <header class="reveal d1 flex items-center justify-between gap-4 border-b border-hairline pb-6">
+    <div class="mx-auto flex min-h-[100svh] max-w-4xl flex-col px-6 sm:px-10">
+
+        <header class="reveal d1 sticky top-0 z-40 -mx-6 flex items-center justify-between gap-4 border-b border-hairline bg-paper/85 px-6 py-5 backdrop-blur-sm sm:-mx-10 sm:px-10">
             <a class="text-[15px] font-medium tracking-tight text-ink" asp-controller="Home" asp-action="Index">msefatayaz.com</a>
+
+            <nav class="meta flex items-center gap-5 text-muted sm:gap-7" aria-label="Bölümler">
+                <a class="transition-colors hover:text-ink" href="/#hakkimda">hakkımda</a>
+                <a class="hidden transition-colors hover:text-ink sm:inline" href="/#teknoloji">teknoloji</a>
+                <a class="transition-colors hover:text-ink" href="/#projeler">projeler</a>
+                <a class="transition-colors hover:text-ink" href="/#iletisim">iletişim</a>
+            </nav>
         </header>
 
-        <main class="flex flex-1 flex-col @icerikHizalama py-16 sm:py-20">
+        <main id="icerik" class="flex flex-1 flex-col @icerikHizalama py-16 sm:py-20">
             @RenderBody()
         </main>
 
-        <footer class="reveal d5 flex items-center justify-between gap-4 border-t border-hairline pt-6 text-[13px] text-muted">
+        <footer class="flex flex-col gap-3 border-t border-hairline py-6 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
             <p>&copy; @DateTime.Now.Year Muhammed Sefa Tayaz</p>
-            <p>Türkiye</p>
+            <p class="meta">Türkiye</p>
         </footer>
 
     </div>

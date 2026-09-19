@@ -11,14 +11,15 @@
 
     Func<string, bool> aktif = eylem => string.Equals(eylem, acikEylem, StringComparison.OrdinalIgnoreCase);
 
-    // Bulunulan sayfa dolu royal zeminde, diğerleri hover'da royal'e döner.
+    // Bulunulan sayfanın altında royal bir çizgi durur; diğerlerinde çizgi
+    // yalnızca imleç üzerine gelince soldan sağa açılır.
     Func<string, string> menuSinifi = eylem => aktif(eylem)
-        ? "bg-royal text-paper"
-        : "text-slate hover:bg-royal/10 hover:text-royal";
+        ? "text-royal after:scale-x-100 after:bg-royal"
+        : "text-slate hover:text-ink after:scale-x-0 after:bg-ink/50 hover:after:scale-x-100";
 
     Func<string, string> mobilMenuSinifi = eylem => aktif(eylem)
-        ? "bg-royal/10 text-royal"
-        : "text-slate hover:bg-royal/10 hover:text-royal";
+        ? "border-l-2 border-royal pl-[14px] text-royal"
+        : "border-l-2 border-transparent pl-[14px] text-slate hover:text-royal";
 }
 <!DOCTYPE html>
 <html lang="tr" class="no-js">
@@ -61,28 +62,28 @@
         <div class="h-[3px] w-full bg-gradient-to-r from-royal via-royal to-ember" aria-hidden="true"></div>
 
         <div class="border-b border-hairline">
-            <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-6 py-3.5 sm:px-10">
+            <div class="mx-auto flex h-16 max-w-4xl items-stretch justify-between gap-4 px-6 sm:px-10">
 
                 <a class="group flex items-center gap-2.5" asp-controller="Home" asp-action="Index" aria-label="Ana sayfa">
-                    <span class="grid h-9 w-9 shrink-0 place-items-center bg-ink text-[14px] font-semibold tracking-tight text-paper transition-colors group-hover:bg-royal"
+                    <span class="grid h-8 w-8 shrink-0 place-items-center bg-ink text-[13px] font-semibold tracking-tight text-paper transition-colors group-hover:bg-royal"
                           aria-hidden="true">MS</span>
                     <span class="text-[15px] font-medium tracking-tight text-ink">msefatayaz<span class="text-royal">.com</span></span>
                 </a>
 
-                @* Masaüstü menüsü *@
-                <nav class="hidden items-center gap-1 sm:flex" aria-label="Ana menü">
-                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("Index")"
+                @* Masaüstü menüsü — alt çizgi başlıktaki ince çizgiyle hizalanır *@
+                <nav class="hidden items-stretch gap-7 sm:flex" aria-label="Ana menü">
+                    <a class="relative flex items-center text-[15px] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:transition-transform after:duration-200 after:content-[''] @menuSinifi("Index")"
                        asp-controller="Home" asp-action="Index">Anasayfa</a>
-                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("About")"
+                    <a class="relative flex items-center text-[15px] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:transition-transform after:duration-200 after:content-[''] @menuSinifi("About")"
                        asp-controller="Home" asp-action="About">Hakkımda</a>
-                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("Projects")"
+                    <a class="relative flex items-center text-[15px] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:transition-transform after:duration-200 after:content-[''] @menuSinifi("Projects")"
                        asp-controller="Home" asp-action="Projects">Projelerim</a>
-                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("Contact")"
+                    <a class="relative flex items-center text-[15px] transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-[2px] after:origin-left after:transition-transform after:duration-200 after:content-[''] @menuSinifi("Contact")"
                        asp-controller="Home" asp-action="Contact">İletişim</a>
                 </nav>
 
                 @* Mobil menü — JavaScript olmadan açılıp kapanır *@
-                <details class="group relative sm:hidden">
+                <details class="group relative flex items-center sm:hidden">
                     <summary class="flex cursor-pointer list-none items-center gap-2 border border-hairline px-3 py-2 text-[14px] font-medium text-ink [&::-webkit-details-marker]:hidden">
                         Menü
                         <svg class="h-4 w-4 text-muted transition-transform group-open:rotate-180"
@@ -92,14 +93,14 @@
                         </svg>
                     </summary>
 
-                    <nav class="absolute right-0 z-50 mt-2 w-48 border border-hairline bg-paper shadow-lg shadow-ink/5" aria-label="Ana menü">
-                        <a class="block px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("Index")"
+                    <nav class="absolute right-0 top-full z-50 mt-2 w-48 border border-hairline bg-paper py-1 shadow-lg shadow-ink/5" aria-label="Ana menü">
+                        <a class="block py-3 pr-4 text-[14px] font-medium transition-colors @mobilMenuSinifi("Index")"
                            asp-controller="Home" asp-action="Index">Anasayfa</a>
-                        <a class="block border-t border-hairline px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("About")"
+                        <a class="block py-3 pr-4 text-[14px] font-medium transition-colors @mobilMenuSinifi("About")"
                            asp-controller="Home" asp-action="About">Hakkımda</a>
-                        <a class="block border-t border-hairline px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("Projects")"
+                        <a class="block py-3 pr-4 text-[14px] font-medium transition-colors @mobilMenuSinifi("Projects")"
                            asp-controller="Home" asp-action="Projects">Projelerim</a>
-                        <a class="block border-t border-hairline px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("Contact")"
+                        <a class="block py-3 pr-4 text-[14px] font-medium transition-colors @mobilMenuSinifi("Contact")"
                            asp-controller="Home" asp-action="Contact">İletişim</a>
                     </nav>
                 </details>

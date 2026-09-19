@@ -16,7 +16,6 @@
     --color-ember: #EA580C;
 
     --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {
@@ -46,27 +45,13 @@
     line-height: 1.05;
 }
 
-/*
- * Bölüm etiketleri C# ad alanı biçiminde yazılır: msefatayaz.about
- * Kök soluk, yaprak koyu; hangi bölümde olduğun tek bakışta okunur.
- */
-.eyebrow {
-    font-family: var(--font-mono);
-    font-size: .75rem;
-    letter-spacing: .04em;
-    color: var(--color-muted);
-}
-
-.eyebrow b {
-    font-weight: 500;
-    color: var(--color-ink);
-}
-
-/* Sayısal/teknik bilgiler için yardımcı yazı tipi */
-.meta {
-    font-family: var(--font-mono);
+/* Bölüm üstü küçük etiket */
+.etiket {
     font-size: .8125rem;
-    letter-spacing: .01em;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
 }
 
 /* Açılışta tek bir sıralı giriş */

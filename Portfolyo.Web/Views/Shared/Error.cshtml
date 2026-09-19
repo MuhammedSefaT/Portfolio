@@ -1,18 +1,29 @@
 @model ErrorViewModel
 @{
     ViewData["Title"] = "Hata";
-    ViewData["MainAlign"] = "justify-start";
 }
 
-<h1 class="reveal d2 display text-[clamp(1.6rem,4.2vw,2.2rem)] font-semibold">Bir hata oluştu.</h1>
-<p class="reveal d3 mt-6 max-w-[52ch] text-[17px] leading-[1.65] text-slate">
-    İsteğiniz işlenirken beklenmeyen bir sorun yaşandı.
-</p>
+<section class="reveal d2">
+    <p class="etiket">Hata</p>
 
-@if (Model.ShowRequestId)
-{
-    <p class="reveal d4 mt-6 text-[13px] text-muted">
-        <strong class="font-medium">İstek No:</strong>
-        <code class="rounded bg-ink/5 px-1.5 py-0.5 font-mono">@Model.RequestId</code>
+    <h1 class="display mt-5 text-[clamp(1.8rem,4.8vw,2.6rem)] font-semibold">Bir şeyler ters gitti.</h1>
+
+    <p class="mt-7 max-w-[54ch] text-[17px] leading-[1.65] text-slate">
+        İsteğiniz işlenirken beklenmeyen bir sorun yaşandı. Sayfayı yenilemeyi deneyebilir
+        ya da ana sayfaya dönebilirsiniz.
     </p>
-}
+
+    @if (Model.ShowRequestId)
+    {
+        <p class="mt-6 text-[13px] text-muted">
+            <strong class="font-medium">İstek No:</strong>
+            <code class="rounded bg-ink/5 px-1.5 py-0.5">@Model.RequestId</code>
+        </p>
+    }
+
+    <a class="mt-9 inline-flex items-center gap-2 text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
+       asp-controller="Home" asp-action="Index">
+        Ana sayfaya dön
+        <span aria-hidden="true">→</span>
+    </a>
+</section>

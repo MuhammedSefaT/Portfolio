@@ -1,12 +1,10 @@
 @{
     ViewData["Title"] = null;
-    ViewData["MainAlign"] = "justify-start";
 }
 
-@* ---------------------------------------------------------------- Hero *@
-<section class="flex min-h-[56svh] flex-col justify-center">
+<section class="flex min-h-[52svh] flex-col justify-center">
 
-    <p class="reveal d2 eyebrow">yazılım geliştirici · arka uç</p>
+    <p class="reveal d2 etiket">Yazılım geliştirici</p>
 
     <h1 class="reveal d2 display mt-5 max-w-2xl text-[clamp(2.4rem,7.2vw,4.4rem)] font-semibold">
         Muhammed Sefa Tayaz
@@ -17,173 +15,56 @@
         yalıtılmış müşteri verisi. Arayüz gerektiğinde Vue.js ile tamamlıyorum.
     </p>
 
-    <p class="reveal d4 meta mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-muted">
-        <span class="text-ink">.NET</span>
-        <span aria-hidden="true">·</span>
-        <span class="text-ink">C#</span>
-        <span aria-hidden="true">·</span>
-        <span class="text-ink">Vue.js</span>
-        <span aria-hidden="true">·</span>
-        <span>Türkiye</span>
-    </p>
-
-    <nav class="reveal d5 mt-10 flex flex-col items-start gap-y-3.5 text-[15px] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-3"
-         aria-label="İletişim bağlantıları">
-
-        <a class="group flex items-center gap-2 text-ink" href="mailto:sefatayaz@gmail.com">
-            <svg class="h-[17px] w-[17px] shrink-0 text-muted transition-colors group-hover:text-royal"
-                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2.75" y="4.75" width="18.5" height="14.5" rx="1.5" />
-                <path d="m3.5 6.5 8.5 6.25L20.5 6.5" />
-            </svg>
-            <span class="underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors group-hover:decoration-royal">sefatayaz@gmail.com</span>
+    <div class="reveal d4 mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+        <a class="bg-ink px-6 py-3 text-[15px] font-medium text-paper transition-colors hover:bg-royal"
+           asp-controller="Home" asp-action="Projects">
+            Projelerimi gör
         </a>
 
-        <a class="flex items-center gap-2 text-muted transition-colors hover:text-royal"
-           href="https://github.com/MuhammedSefaT" target="_blank" rel="noopener">
-            <svg class="h-[17px] w-[17px] shrink-0" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-            </svg>
-            GitHub
+        <a class="px-2 py-3 text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
+           asp-controller="Home" asp-action="Contact">
+            İletişime geç
         </a>
+    </div>
 
-        <a class="flex items-center gap-2 text-muted transition-colors hover:text-royal"
-           href="https://www.linkedin.com/in/msefatyz" target="_blank" rel="noopener">
-            <svg class="h-[17px] w-[17px] shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
-            </svg>
-            LinkedIn
-        </a>
-
-    </nav>
 </section>
 
-@* ------------------------------------------------------------ Hakkımda *@
-<section id="hakkimda" class="mt-28 scroll-mt-24 border-t border-hairline pt-10 sm:mt-36" data-reveal>
+<section class="mt-24 border-t border-hairline pt-12 sm:mt-32" data-reveal>
 
-    <p class="eyebrow">msefatayaz.<b>about</b></p>
+    <p class="etiket">Ne yapıyorum</p>
 
-    <div class="mt-8 grid gap-10 sm:grid-cols-[1fr_auto] sm:gap-16">
-        <div class="max-w-[54ch] space-y-5 text-[17px] leading-[1.65] text-slate">
-            <p>
-                Arka uçta çalışmayı, bir sistemin kurallarını netleştirmeyi seviyorum: veri nereye
-                yazılır, kim neye erişir, bir şey ters gittiğinde ne olur.
-            </p>
-            <p>
-                .NET ile servis ve API yazıyorum. Çok kiracılı yapılarda her müşterinin verisini
-                ayrı tutan katmanları kuruyorum; yetkilendirmeyi rol ve izin seviyesinde çözüyorum.
-                Arayüz gerektiğinde Vue.js ve Tailwind ile tamamlıyorum.
-            </p>
-            <p>
-                Bu siteyi de sıfırdan yazıyorum — veritabanı yerine JSON dosyaları, katmanlı bir
-                klasör yapısı ve testlerle.
+    <div class="mt-8 grid gap-10 sm:grid-cols-3 sm:gap-8">
+
+        <div>
+            <h2 class="text-[17px] font-semibold text-ink">Arka uç</h2>
+            <p class="mt-3 text-[15px] leading-[1.65] text-slate">
+                .NET ile servis ve API yazıyorum. Veri nereye yazılır, kim neye erişir,
+                hata olduğunda ne olur — önce bunları netleştiriyorum.
             </p>
         </div>
 
-        <dl class="meta space-y-4 text-muted sm:min-w-44">
-            <div>
-                <dt class="text-muted/80">konum</dt>
-                <dd class="mt-1 text-ink">Türkiye</dd>
-            </div>
-            <div>
-                <dt class="text-muted/80">odak</dt>
-                <dd class="mt-1 text-ink">Arka uç, çok kiracılı SaaS</dd>
-            </div>
-            <div>
-                <dt class="text-muted/80">arayüz</dt>
-                <dd class="mt-1 text-ink">Vue.js, Tailwind</dd>
-            </div>
-        </dl>
-    </div>
-</section>
-
-@* ---------------------------------------------------------- Teknoloji *@
-<section id="teknoloji" class="mt-24 scroll-mt-24 border-t border-hairline pt-10 sm:mt-32" data-reveal>
-
-    <p class="eyebrow">msefatayaz.<b>stack</b></p>
-
-    <h2 class="display mt-6 text-[clamp(1.5rem,3.6vw,2rem)] font-semibold">Kullandığım araçlar</h2>
-
-    <div class="mt-9 space-y-8">
-        <div class="grid gap-3 sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-6">
-            <p class="meta text-muted">arka uç</p>
-            <ul class="flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink">
-                <li>C#</li>
-                <li>.NET</li>
-                <li>ASP.NET Core MVC</li>
-                <li>Entity Framework Core</li>
-            </ul>
+        <div>
+            <h2 class="text-[17px] font-semibold text-ink">Çok kiracılı yapı</h2>
+            <p class="mt-3 text-[15px] leading-[1.65] text-slate">
+                Tek kod tabanında her müşterinin verisini ayrı tutan katmanları kuruyorum.
+                Yetkilendirme rol ve izin seviyesinde.
+            </p>
         </div>
 
-        <div class="grid gap-3 border-t border-hairline pt-8 sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-6">
-            <p class="meta text-muted">arayüz</p>
-            <ul class="flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink">
-                <li>Vue.js</li>
-                <li>Tailwind CSS</li>
-                <li>JavaScript</li>
-            </ul>
+        <div>
+            <h2 class="text-[17px] font-semibold text-ink">Arayüz</h2>
+            <p class="mt-3 text-[15px] leading-[1.65] text-slate">
+                Gerektiğinde Vue.js ve Tailwind ile arayüzü de ben tamamlıyorum.
+                Bu site de öyle yazıldı.
+            </p>
         </div>
 
-        <div class="grid gap-3 border-t border-hairline pt-8 sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-6">
-            <p class="meta text-muted">test ve araçlar</p>
-            <ul class="flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink">
-                <li>xUnit</li>
-                <li>Git</li>
-                <li>AutoMapper</li>
-                <li>FluentValidation</li>
-            </ul>
-        </div>
     </div>
-</section>
 
-@* ----------------------------------------------------------- Projeler *@
-<section id="projeler" class="mt-24 scroll-mt-24 border-t border-hairline pt-10 sm:mt-32" data-reveal>
-
-    <p class="eyebrow">msefatayaz.<b>work</b></p>
-
-    <h2 class="display mt-6 text-[clamp(1.5rem,3.6vw,2rem)] font-semibold">Projeler</h2>
-
-    <div class="mt-8 border border-dashed border-hairline p-8 sm:p-10">
-        <p class="meta flex items-center gap-2.5 text-muted">
-            <span class="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-ember" aria-hidden="true"></span>
-            hazırlanıyor
-        </p>
-
-        <p class="mt-4 max-w-[52ch] text-[17px] leading-[1.65] text-slate">
-            Üzerinde çalıştığım işleri burada tek tek anlatacağım: ne yaptığı, hangi sorunu
-            çözdüğü ve nasıl kurulduğu. O zamana kadar koda GitHub üzerinden bakabilirsin.
-        </p>
-
-        <a class="mt-7 inline-flex items-center gap-2 text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
-           href="https://github.com/MuhammedSefaT" target="_blank" rel="noopener">
-            GitHub'daki depolara bak
-            <span aria-hidden="true">→</span>
-        </a>
-    </div>
-</section>
-
-@* ----------------------------------------------------------- İletişim *@
-<section id="iletisim" class="mt-24 scroll-mt-24 border-t border-hairline pt-10 sm:mt-32" data-reveal>
-
-    <p class="eyebrow">msefatayaz.<b>contact</b></p>
-
-    <h2 class="display mt-6 max-w-[20ch] text-[clamp(1.7rem,4.4vw,2.6rem)] font-semibold">
-        Bir iş, bir soru ya da sadece merhaba.
-    </h2>
-
-    <p class="mt-6 max-w-[52ch] text-[17px] leading-[1.65] text-slate">
-        E-posta en hızlısı; genellikle aynı gün dönüyorum.
-    </p>
-
-    <a class="group mt-8 inline-flex items-baseline gap-3 text-[clamp(1.1rem,3vw,1.5rem)] font-medium text-ink"
-       href="mailto:sefatayaz@gmail.com">
-        <span class="underline decoration-royal/40 decoration-2 underline-offset-[8px] transition-colors group-hover:decoration-royal">sefatayaz@gmail.com</span>
-        <span class="meta text-muted transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+    <a class="mt-10 inline-flex items-center gap-2 text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
+       asp-controller="Home" asp-action="About">
+        Hakkımda daha fazlası
+        <span aria-hidden="true">→</span>
     </a>
 
-    <div class="meta mt-10 flex flex-wrap gap-x-6 gap-y-2 text-muted">
-        <a class="transition-colors hover:text-royal" href="https://github.com/MuhammedSefaT" target="_blank" rel="noopener">github.com/MuhammedSefaT</a>
-        <a class="transition-colors hover:text-royal" href="https://www.linkedin.com/in/msefatyz" target="_blank" rel="noopener">linkedin.com/in/msefatyz</a>
-    </div>
 </section>

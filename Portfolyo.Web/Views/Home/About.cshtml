@@ -3,72 +3,94 @@
     ViewData["Description"] = "Muhammed Sefa Tayaz kimdir, nasıl çalışır ve hangi araçları kullanır.";
 }
 
-<section class="grid gap-12 sm:grid-cols-[minmax(0,1fr)_18rem] sm:items-start sm:gap-14">
+<header class="reveal d2">
+    <h1 class="display text-[clamp(2.2rem,6.4vw,3.6rem)] font-semibold">
+        Hakkımda
+    </h1>
 
-    <div class="reveal d2">
-        <p class="etiket">Hakkımda</p>
+    <p class="mt-6 max-w-[56ch] text-[18px] leading-[1.6] text-slate">
+        Arka uçta çalışıyorum. Bir sistemin kurallarını netleştirmeyi,
+        kararları sonradan sökülmeyecek şekilde vermeyi seviyorum.
+    </p>
 
-        <h1 class="display mt-5 max-w-[18ch] text-[clamp(2rem,5.6vw,3.2rem)] font-semibold">
-            Sistemin kurallarını netleştirmeyi severim.
-        </h1>
+    <div class="mt-10 h-[3px] w-20 bg-royal" aria-hidden="true"></div>
+</header>
 
-        <div class="mt-8 max-w-[56ch] space-y-5 text-[17px] leading-[1.7] text-slate">
-            <p>
-                Arka uçta çalışıyorum. Bir işe başlarken önce soruları yanıtlıyorum:
-                veri nereye yazılır, kim neye erişir, bir şey ters gittiğinde ne olur.
-                Bu üçü netleşmeden kod yazmak, sonradan sökülmesi zor kararlar demek.
-            </p>
-            <p>
-                .NET ile servis ve API geliştiriyorum. Çok kiracılı yapılarda her müşterinin
-                verisini birbirinden ayrı tutan katmanları kuruyorum; yetkilendirmeyi rol ve
-                izin seviyesinde çözüyorum. Arayüz gerektiğinde Vue.js ve Tailwind ile
-                tamamlıyorum.
-            </p>
-            <p>
-                Bu siteyi de sıfırdan yazıyorum: veritabanı yerine JSON dosyaları, katmanlı
-                bir klasör yapısı ve testlerle.
-            </p>
-        </div>
-    </div>
+<section class="mt-14 grid gap-12 sm:grid-cols-[17rem_minmax(0,1fr)] sm:items-start sm:gap-14">
 
     @* Kendi fotoğrafını eklemek için: wwwroot/img klasörüne koyup src değerini değiştir. *@
     <figure class="reveal d3 sm:sticky sm:top-28">
-        <img class="w-full border border-hairline object-cover"
-             src="~/img/portre.svg"
-             width="800" height="1000"
-             alt="Muhammed Sefa Tayaz" />
-        <figcaption class="mt-3 text-[13px] text-muted">Türkiye</figcaption>
+        <div class="relative">
+            <span class="absolute -bottom-3 -right-3 h-full w-full border-2 border-royal/25" aria-hidden="true"></span>
+            <img class="relative w-full object-cover"
+                 src="~/img/portre.svg"
+                 width="800" height="1000"
+                 alt="Muhammed Sefa Tayaz" />
+        </div>
+
+        <figcaption class="mt-6 space-y-3 text-[14px]">
+            <span class="flex items-baseline justify-between gap-4 border-b border-hairline pb-2">
+                <span class="text-muted">Konum</span>
+                <span class="font-medium text-ink">Türkiye</span>
+            </span>
+            <span class="flex items-baseline justify-between gap-4 border-b border-hairline pb-2">
+                <span class="text-muted">Odak</span>
+                <span class="font-medium text-ink">Arka uç</span>
+            </span>
+            <span class="flex items-baseline justify-between gap-4">
+                <span class="text-muted">Arayüz</span>
+                <span class="font-medium text-ink">Vue.js</span>
+            </span>
+        </figcaption>
     </figure>
+
+    <div class="reveal d4 max-w-[58ch] space-y-5 text-[17px] leading-[1.7] text-slate">
+        <p>
+            Bir işe başlarken önce üç soruyu yanıtlıyorum: veri nereye yazılır, kim neye
+            erişir, bir şey ters gittiğinde ne olur. Bunlar netleşmeden yazılan kod,
+            sonradan sökülmesi pahalı kararlar demek.
+        </p>
+        <p>
+            .NET ile servis ve API geliştiriyorum. Çok kiracılı yapılarda her müşterinin
+            verisini birbirinden ayrı tutan katmanları kuruyorum; yetkilendirmeyi rol ve
+            izin seviyesinde çözüyorum.
+        </p>
+        <p>
+            Arayüz gerektiğinde Vue.js ve Tailwind ile tamamlıyorum. Bu siteyi de sıfırdan
+            yazıyorum: veritabanı yerine JSON dosyaları, katmanlı bir klasör yapısı ve
+            testlerle.
+        </p>
+    </div>
 
 </section>
 
 <section class="mt-24 border-t border-hairline pt-12 sm:mt-32" data-reveal>
 
-    <p class="etiket">Kullandığım araçlar</p>
+    <h2 class="display text-[clamp(1.5rem,3.6vw,2rem)] font-semibold">Kullandığım araçlar</h2>
 
-    <div class="mt-9 space-y-8">
+    <div class="mt-10 grid gap-8 sm:grid-cols-3">
 
-        <div class="grid gap-3 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-8">
-            <p class="text-[14px] font-medium text-muted">Arka uç</p>
-            <ul class="flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink">
+        <div class="border-t-2 border-royal pt-5">
+            <h3 class="text-[15px] font-semibold text-ink">Arka uç</h3>
+            <ul class="mt-4 space-y-2 text-[15px] text-slate">
                 <li>C#</li>
                 <li>.NET</li>
                 <li>ASP.NET Core MVC</li>
             </ul>
         </div>
 
-        <div class="grid gap-3 border-t border-hairline pt-8 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-8">
-            <p class="text-[14px] font-medium text-muted">Arayüz</p>
-            <ul class="flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink">
+        <div class="border-t-2 border-royal/60 pt-5">
+            <h3 class="text-[15px] font-semibold text-ink">Arayüz</h3>
+            <ul class="mt-4 space-y-2 text-[15px] text-slate">
                 <li>Vue.js</li>
                 <li>Tailwind CSS</li>
                 <li>JavaScript</li>
             </ul>
         </div>
 
-        <div class="grid gap-3 border-t border-hairline pt-8 sm:grid-cols-[10rem_1fr] sm:items-baseline sm:gap-8">
-            <p class="text-[14px] font-medium text-muted">Test ve araçlar</p>
-            <ul class="flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-ink">
+        <div class="border-t-2 border-ember/60 pt-5">
+            <h3 class="text-[15px] font-semibold text-ink">Test ve araçlar</h3>
+            <ul class="mt-4 space-y-2 text-[15px] text-slate">
                 <li>xUnit</li>
                 <li>Git</li>
                 <li>AutoMapper</li>
@@ -78,7 +100,7 @@
 
     </div>
 
-    <a class="mt-12 inline-flex items-center gap-2 text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
+    <a class="mt-14 inline-flex items-center gap-2 bg-ink px-6 py-3 text-[15px] font-medium text-paper transition-colors hover:bg-royal"
        asp-controller="Home" asp-action="Contact">
         Benimle iletişime geç
         <span aria-hidden="true">→</span>

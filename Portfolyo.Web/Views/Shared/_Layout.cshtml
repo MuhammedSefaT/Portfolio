@@ -9,10 +9,16 @@
 
     var acikEylem = ViewContext.RouteData.Values["action"]?.ToString();
 
-    // Bulunulan sayfanın menü bağlantısı koyu, diğerleri soluk görünür.
-    Func<string, string> menuSinifi = eylem => string.Equals(eylem, acikEylem, StringComparison.OrdinalIgnoreCase)
-        ? "text-ink"
-        : "text-muted hover:text-ink";
+    Func<string, bool> aktif = eylem => string.Equals(eylem, acikEylem, StringComparison.OrdinalIgnoreCase);
+
+    // Bulunulan sayfa dolu royal zeminde, diğerleri hover'da royal'e döner.
+    Func<string, string> menuSinifi = eylem => aktif(eylem)
+        ? "bg-royal text-paper"
+        : "text-slate hover:bg-royal/10 hover:text-royal";
+
+    Func<string, string> mobilMenuSinifi = eylem => aktif(eylem)
+        ? "bg-royal/10 text-royal"
+        : "text-slate hover:bg-royal/10 hover:text-royal";
 }
 <!DOCTYPE html>
 <html lang="tr" class="no-js">
@@ -22,7 +28,7 @@
     <title>@sayfaBasligi</title>
     <meta name="description" content="@aciklama" />
     <meta name="author" content="Muhammed Sefa Tayaz" />
-    <meta name="theme-color" content="#FAFAFB" />
+    <meta name="theme-color" content="#0F172A" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://msefatayaz.com/" />
@@ -49,18 +55,56 @@
     <a class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-[14px] focus:text-paper"
        href="#icerik">İçeriğe geç</a>
 
-    <header class="sticky top-0 z-40 border-b border-hairline bg-paper/85 backdrop-blur-sm">
-        <div class="mx-auto flex max-w-4xl items-center justify-between gap-6 px-6 py-5 sm:px-10">
+    <header class="sticky top-0 z-40 bg-paper/90 backdrop-blur-sm">
 
-            <a class="text-[15px] font-medium tracking-tight text-ink" asp-controller="Home" asp-action="Index">msefatayaz.com</a>
+        @* Sayfanın üstünde ince renkli şerit *@
+        <div class="h-[3px] w-full bg-gradient-to-r from-royal via-royal to-ember" aria-hidden="true"></div>
 
-            <nav class="flex items-center gap-4 text-[14px] sm:gap-7 sm:text-[15px]" aria-label="Ana menü">
-                <a class="transition-colors @menuSinifi("Index")" asp-controller="Home" asp-action="Index">Anasayfa</a>
-                <a class="transition-colors @menuSinifi("About")" asp-controller="Home" asp-action="About">Hakkımda</a>
-                <a class="transition-colors @menuSinifi("Projects")" asp-controller="Home" asp-action="Projects">Projelerim</a>
-                <a class="transition-colors @menuSinifi("Contact")" asp-controller="Home" asp-action="Contact">İletişim</a>
-            </nav>
+        <div class="border-b border-hairline">
+            <div class="mx-auto flex max-w-4xl items-center justify-between gap-4 px-6 py-3.5 sm:px-10">
 
+                <a class="group flex items-center gap-2.5" asp-controller="Home" asp-action="Index" aria-label="Ana sayfa">
+                    <span class="grid h-9 w-9 shrink-0 place-items-center bg-ink text-[14px] font-semibold tracking-tight text-paper transition-colors group-hover:bg-royal"
+                          aria-hidden="true">MS</span>
+                    <span class="text-[15px] font-medium tracking-tight text-ink">msefatayaz<span class="text-royal">.com</span></span>
+                </a>
+
+                @* Masaüstü menüsü *@
+                <nav class="hidden items-center gap-1 sm:flex" aria-label="Ana menü">
+                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("Index")"
+                       asp-controller="Home" asp-action="Index">Anasayfa</a>
+                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("About")"
+                       asp-controller="Home" asp-action="About">Hakkımda</a>
+                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("Projects")"
+                       asp-controller="Home" asp-action="Projects">Projelerim</a>
+                    <a class="px-3.5 py-2 text-[14px] font-medium transition-colors @menuSinifi("Contact")"
+                       asp-controller="Home" asp-action="Contact">İletişim</a>
+                </nav>
+
+                @* Mobil menü — JavaScript olmadan açılıp kapanır *@
+                <details class="group relative sm:hidden">
+                    <summary class="flex cursor-pointer list-none items-center gap-2 border border-hairline px-3 py-2 text-[14px] font-medium text-ink [&::-webkit-details-marker]:hidden">
+                        Menü
+                        <svg class="h-4 w-4 text-muted transition-transform group-open:rotate-180"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </summary>
+
+                    <nav class="absolute right-0 z-50 mt-2 w-48 border border-hairline bg-paper shadow-lg shadow-ink/5" aria-label="Ana menü">
+                        <a class="block px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("Index")"
+                           asp-controller="Home" asp-action="Index">Anasayfa</a>
+                        <a class="block border-t border-hairline px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("About")"
+                           asp-controller="Home" asp-action="About">Hakkımda</a>
+                        <a class="block border-t border-hairline px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("Projects")"
+                           asp-controller="Home" asp-action="Projects">Projelerim</a>
+                        <a class="block border-t border-hairline px-4 py-3 text-[14px] font-medium transition-colors @mobilMenuSinifi("Contact")"
+                           asp-controller="Home" asp-action="Contact">İletişim</a>
+                    </nav>
+                </details>
+
+            </div>
         </div>
     </header>
 
@@ -76,8 +120,11 @@
             <div class="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
 
                 <div class="max-w-[38ch]">
-                    <p class="text-[15px] font-medium">Muhammed Sefa Tayaz</p>
-                    <p class="mt-3 text-[14px] leading-[1.6] text-paper/60">
+                    <p class="flex items-center gap-2.5 text-[15px] font-medium">
+                        <span class="grid h-8 w-8 shrink-0 place-items-center bg-paper/10 text-[13px] font-semibold text-paper" aria-hidden="true">MS</span>
+                        Muhammed Sefa Tayaz
+                    </p>
+                    <p class="mt-4 text-[14px] leading-[1.6] text-paper/60">
                         .NET ile arka uç ve çok kiracılı SaaS ürünleri geliştiriyorum.
                     </p>
                 </div>
@@ -100,7 +147,7 @@
             <div class="mt-12 flex flex-col-reverse gap-4 border-t border-paper/15 pt-6 text-[13px] text-paper/50 sm:flex-row sm:items-center sm:justify-between">
                 <p>&copy; @DateTime.Now.Year Muhammed Sefa Tayaz · Türkiye</p>
 
-                <a class="inline-flex items-center gap-2 self-start text-paper/70 transition-colors hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper"
+                <a class="inline-flex items-center gap-2 self-start border border-paper/20 px-3.5 py-2 text-paper/70 transition-colors hover:border-paper/50 hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paper"
                    href="#ust">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

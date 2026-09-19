@@ -1,29 +1,33 @@
 @model ErrorViewModel
 @{
-    ViewData["Title"] = "Hata";
+    ViewData["Title"] = "Bir şeyler ters gitti";
+    ViewData["Etiket"] = "Hata";
+    ViewData["Lede"] = "İsteğiniz işlenirken beklenmeyen bir sorun yaşandı.";
 }
 
-<section class="reveal d2">
-    <p class="etiket">Hata</p>
+<partial name="_SayfaBasligi" />
 
-    <h1 class="display mt-5 text-[clamp(1.8rem,4.8vw,2.6rem)] font-semibold">Bir şeyler ters gitti.</h1>
+<section class="bg-white">
+    <div class="kapsayici py-20 lg:py-28">
+        <div class="kart mx-auto max-w-2xl p-10 lg:p-12" data-reveal>
+            <h2 class="text-[19px] font-bold">Ne yapabilirsiniz?</h2>
+            <p class="mt-4 text-[16.5px] leading-[1.75]">
+                Sayfayı yenilemeyi deneyebilir ya da ana sayfaya dönebilirsiniz.
+                Sorun sürerse bana yazabilirsiniz.
+            </p>
 
-    <p class="mt-7 max-w-[54ch] text-[17px] leading-[1.65] text-slate">
-        İsteğiniz işlenirken beklenmeyen bir sorun yaşandı. Sayfayı yenilemeyi deneyebilir
-        ya da ana sayfaya dönebilirsiniz.
-    </p>
+            @if (Model.ShowRequestId)
+            {
+                <p class="mt-6 rounded-lg bg-surface px-4 py-3 text-[14px]">
+                    <span class="font-semibold text-ink">İstek No:</span>
+                    <span class="text-muted">@Model.RequestId</span>
+                </p>
+            }
 
-    @if (Model.ShowRequestId)
-    {
-        <p class="mt-6 text-[13px] text-muted">
-            <strong class="font-medium">İstek No:</strong>
-            <code class="rounded bg-ink/5 px-1.5 py-0.5">@Model.RequestId</code>
-        </p>
-    }
-
-    <a class="mt-9 inline-flex items-center gap-2 text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
-       asp-controller="Home" asp-action="Index">
-        Ana sayfaya dön
-        <span aria-hidden="true">→</span>
-    </a>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a class="dugme dugme-birincil" asp-controller="Home" asp-action="Index">Ana sayfaya dön</a>
+                <a class="dugme dugme-ikincil" asp-controller="Home" asp-action="Contact">İletişime geç</a>
+            </div>
+        </div>
+    </div>
 </section>

@@ -4,38 +4,53 @@
     ViewData["Description"] = "Yönetim paneli girişi.";
 }
 
-<h1 class="reveal d2 display text-[clamp(1.6rem,4.2vw,2.2rem)] font-semibold">Giriş</h1>
-<p class="reveal d2 mt-3 text-[15px] text-muted">Yönetim paneline erişmek için giriş yapın.</p>
+<section class="flex min-h-[calc(100svh-72px)] items-center bg-surface">
+    <div class="kapsayici py-16 lg:py-20">
 
-<form class="reveal d3 mt-8 max-w-sm" asp-controller="Account" asp-action="Login"
-      asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+        <div class="kart reveal d2 mx-auto w-full max-w-md p-8 sm:p-10">
 
-    <div asp-validation-summary="ModelOnly" class="mb-5 space-y-1 text-[14px] text-ember"></div>
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-ink text-[15px] font-bold text-brand-light" aria-hidden="true">MS</span>
 
-    <div class="border-t border-hairline pt-6">
-        <label class="block text-[14px] font-medium text-ink" asp-for="UserNameOrEmail">Kullanıcı adı veya e-posta</label>
-        <input class="mt-2 w-full border-b border-hairline bg-transparent pb-2 text-[15px] text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-royal"
-               asp-for="UserNameOrEmail" autocomplete="username" autofocus placeholder="sefa" />
-        <span class="mt-1 block text-[13px] text-ember" asp-validation-for="UserNameOrEmail"></span>
+            <h1 class="mt-6 text-[26px] font-bold">Yönetim paneli</h1>
+            <p class="mt-2 text-[15.5px] leading-[1.7]">Devam etmek için giriş yapın.</p>
+
+            <form class="mt-8" asp-controller="Account" asp-action="Login"
+                  asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="mb-6 space-y-1 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700 empty:hidden"></div>
+
+                <div>
+                    <label class="block text-[14px] font-semibold text-ink" asp-for="UserNameOrEmail">Kullanıcı adı veya e-posta</label>
+                    <input class="mt-2 w-full rounded-lg border border-line bg-white px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted focus:border-brand"
+                           asp-for="UserNameOrEmail" autocomplete="username" autofocus placeholder="sefa" />
+                    <span class="mt-1.5 block text-[13px] text-red-600" asp-validation-for="UserNameOrEmail"></span>
+                </div>
+
+                <div class="mt-5">
+                    <label class="block text-[14px] font-semibold text-ink" asp-for="Password">Parola</label>
+                    <input class="mt-2 w-full rounded-lg border border-line bg-white px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-muted focus:border-brand"
+                           asp-for="Password" type="password" autocomplete="current-password" placeholder="••••••••" />
+                    <span class="mt-1.5 block text-[13px] text-red-600" asp-validation-for="Password"></span>
+                </div>
+
+                <label class="mt-6 flex items-center gap-2.5 text-[14.5px]">
+                    <input class="h-4 w-4 rounded border-line accent-brand" asp-for="RememberMe" />
+                    <span>Beni hatırla</span>
+                </label>
+
+                <button class="dugme dugme-birincil mt-8 w-full" type="submit">Giriş yap</button>
+            </form>
+
+            <a class="mt-6 inline-flex items-center gap-2 text-[14.5px] font-medium text-muted transition-colors hover:text-ink"
+               asp-controller="Home" asp-action="Index">
+                <span aria-hidden="true">←</span>
+                Siteye dön
+            </a>
+        </div>
+
     </div>
-
-    <div class="mt-6">
-        <label class="block text-[14px] font-medium text-ink" asp-for="Password">Parola</label>
-        <input class="mt-2 w-full border-b border-hairline bg-transparent pb-2 text-[15px] text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-royal"
-               asp-for="Password" type="password" autocomplete="current-password" placeholder="••••••••" />
-        <span class="mt-1 block text-[13px] text-ember" asp-validation-for="Password"></span>
-    </div>
-
-    <label class="mt-6 flex items-center gap-2.5 text-[14px] text-slate">
-        <input class="h-4 w-4 rounded border-hairline text-royal accent-royal" asp-for="RememberMe" />
-        <span>Beni hatırla</span>
-    </label>
-
-    <button class="mt-8 w-full bg-ink px-5 py-3 text-[15px] font-medium text-paper transition-colors hover:bg-royal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-royal"
-            type="submit">
-        Giriş yap
-    </button>
-</form>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

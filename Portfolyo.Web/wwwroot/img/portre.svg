@@ -1,31 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Portre yer tutucusu">
   <defs>
     <linearGradient id="zemin" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0F172A"/>
-      <stop offset="1" stop-color="#1E3A8A"/>
+      <stop offset="0" stop-color="#0B1220"/>
+      <stop offset="1" stop-color="#16213D"/>
     </linearGradient>
-    <radialGradient id="isik" cx="0.72" cy="0.22" r="0.7">
-      <stop offset="0" stop-color="#FAFAFB" stop-opacity="0.16"/>
-      <stop offset="1" stop-color="#FAFAFB" stop-opacity="0"/>
+    <radialGradient id="isik" cx="0.75" cy="0.2" r="0.75">
+      <stop offset="0" stop-color="#2DD4BF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#2DD4BF" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <rect width="800" height="1000" fill="url(#zemin)"/>
   <rect width="800" height="1000" fill="url(#isik)"/>
 
-  <g fill="none" stroke="#FAFAFB" stroke-opacity="0.10" stroke-width="1">
-    <path d="M0 250h800M0 500h800M0 750h800M200 0v1000M400 0v1000M600 0v1000"/>
+  <g fill="none" stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 200h800M0 400h800M0 600h800M0 800h800M200 0v1000M400 0v1000M600 0v1000"/>
   </g>
 
-  <text x="400" y="530"
-        font-family="'Instrument Sans', system-ui, sans-serif"
-        font-size="180" font-weight="600" letter-spacing="10"
-        fill="#FAFAFB" fill-opacity="0.9"
-        text-anchor="middle">MST</text>
+  <circle cx="400" cy="440" r="120" fill="#FFFFFF" fill-opacity="0.05" stroke="#2DD4BF" stroke-opacity="0.35" stroke-width="2"/>
 
-  <text x="400" y="596"
-        font-family="'Instrument Sans', system-ui, sans-serif"
-        font-size="22" font-weight="500" letter-spacing="6"
-        fill="#FAFAFB" fill-opacity="0.45"
+  <text x="400" y="472"
+        font-family="'Plus Jakarta Sans', system-ui, sans-serif"
+        font-size="86" font-weight="800" letter-spacing="4"
+        fill="#2DD4BF" text-anchor="middle">MS</text>
+
+  <text x="400" y="640"
+        font-family="'Inter', system-ui, sans-serif"
+        font-size="22" font-weight="500" letter-spacing="5"
+        fill="#FFFFFF" fill-opacity="0.4"
         text-anchor="middle">FOTOĞRAF YER TUTUCUSU</text>
 </svg>

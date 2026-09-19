@@ -5,17 +5,31 @@
 @source not "../bin";
 @source not "../obj";
 
-/* Tasarımın renk ve yazı tipi paleti */
+/* ------------------------------------------------------------------ Tema */
 @theme {
-    --color-paper: #FAFAFB;
-    --color-ink: #0F172A;
-    --color-slate: #475569;
-    --color-muted: #64748B;
-    --color-hairline: #E4E7EC;
-    --color-royal: #1E3A8A;
-    --color-ember: #EA580C;
+    /* Koyu yüzeyler */
+    --color-ink: #0B1220;
+    --color-ink-soft: #16213D;
 
-    --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    /* Açık yüzeyler ve çizgiler */
+    --color-surface: #F7F9FC;
+    --color-line: #E4E9F2;
+
+    /* Metin */
+    --color-body: #4A5568;
+    --color-muted: #8896AB;
+
+    /* Marka rengi */
+    --color-brand: #0F766E;
+    --color-brand-dark: #115E59;
+    --color-brand-light: #2DD4BF;
+    --color-brand-soft: #EFFAF8;
+
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-display: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+
+    --shadow-kart: 0 1px 2px rgba(11, 18, 32, .04), 0 10px 30px -12px rgba(11, 18, 32, .12);
+    --shadow-kart-hover: 0 2px 4px rgba(11, 18, 32, .05), 0 18px 40px -14px rgba(11, 18, 32, .18);
 }
 
 @layer base {
@@ -25,65 +39,252 @@
     }
 
     body {
-        background-color: var(--color-paper);
-        background-image: radial-gradient(820px 560px at 90% 106%, rgba(30, 58, 138, .11), transparent 70%);
-        background-repeat: no-repeat;
+        background-color: #FFFFFF;
+        color: var(--color-body);
     }
 
-    a:focus-visible,
-    button:focus-visible,
-    input:focus-visible {
-        outline: 2px solid var(--color-royal);
-        outline-offset: 4px;
-        border-radius: 1px;
+    h1, h2, h3, h4 {
+        font-family: var(--font-display);
+        color: var(--color-ink);
+        letter-spacing: -.02em;
+    }
+
+    :is(a, button, summary, input, textarea):focus-visible {
+        outline: 2px solid var(--color-brand);
+        outline-offset: 3px;
+        border-radius: 4px;
     }
 }
 
-/* Başlıklar için sıkı harf aralığı */
-.display {
-    letter-spacing: -.032em;
-    line-height: 1.05;
+/* ------------------------------------------------------------- Kapsayıcı */
+.kapsayici {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 78rem;
+    padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+    .kapsayici { padding-inline: 2rem; }
+}
+
+@media (min-width: 1024px) {
+    .kapsayici { padding-inline: 2.5rem; }
+}
+
+/* --------------------------------------------------------------- Başlık */
+.baslik-dev {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.25rem, 5.2vw, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+}
+
+.baslik-bolum {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -.025em;
 }
 
 /* Bölüm üstü küçük etiket */
 .etiket {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+}
+
+.etiket::before {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    background: currentColor;
+}
+
+.etiket-koyu {
+    color: var(--color-brand-light);
+}
+
+/* ---------------------------------------------------------------- Rozet */
+.rozet {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    background: #fff;
+    padding: .375rem .875rem;
     font-size: .8125rem;
     font-weight: 500;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: var(--color-muted);
+    color: var(--color-body);
 }
 
-/* Açılışta tek bir sıralı giriş */
+.rozet-koyu {
+    border-color: rgba(255, 255, 255, .16);
+    background: rgba(255, 255, 255, .06);
+    color: rgba(255, 255, 255, .85);
+}
+
+/* ---------------------------------------------------------------- Düğme */
+.dugme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    border-radius: .625rem;
+    padding: .8125rem 1.5rem;
+    font-size: .9375rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.dugme:active { transform: translateY(1px); }
+
+.dugme-birincil {
+    background: var(--color-brand);
+    color: #fff;
+    box-shadow: 0 8px 20px -10px rgba(15, 118, 110, .8);
+}
+
+.dugme-birincil:hover { background: var(--color-brand-dark); }
+
+.dugme-ikincil {
+    background: #fff;
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+}
+
+.dugme-ikincil:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}
+
+.dugme-beyaz {
+    background: #fff;
+    color: var(--color-ink);
+}
+
+.dugme-beyaz:hover { background: rgba(255, 255, 255, .88); }
+
+.dugme-hayalet {
+    border: 1px solid rgba(255, 255, 255, .25);
+    color: #fff;
+}
+
+.dugme-hayalet:hover {
+    border-color: rgba(255, 255, 255, .55);
+    background: rgba(255, 255, 255, .06);
+}
+
+/* ----------------------------------------------------------------- Kart */
+.kart {
+    position: relative;
+    border: 1px solid var(--color-line);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: var(--shadow-kart);
+    transition: box-shadow .22s ease, transform .22s ease, border-color .22s ease;
+}
+
+.kart-etkilesimli:hover {
+    box-shadow: var(--shadow-kart-hover);
+    transform: translateY(-3px);
+    border-color: rgba(15, 118, 110, .35);
+}
+
+.kart-koyu {
+    border-color: rgba(255, 255, 255, .12);
+    background: rgba(255, 255, 255, .04);
+    box-shadow: none;
+}
+
+/* Kart içindeki ikon kutusu */
+.ikon-kutu {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .75rem;
+    background: var(--color-brand-soft);
+    color: var(--color-brand);
+}
+
+.ikon-kutu-koyu {
+    background: rgba(45, 212, 191, .12);
+    color: var(--color-brand-light);
+}
+
+/* ---------------------------------------------------------- Koyu bölüm */
+.koyu-bolum {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-ink);
+    color: #fff;
+}
+
+/* İnce ızgara dokusu ve yumuşak ışık */
+.koyu-bolum::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 75%);
+}
+
+.koyu-bolum::after {
+    content: "";
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 46rem;
+    height: 46rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(45, 212, 191, .18), transparent 62%);
+    pointer-events: none;
+}
+
+.koyu-bolum > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* --------------------------------------------------------------- Hareket */
 .reveal {
     opacity: 0;
-    transform: translateY(10px);
-    animation: reveal .8s cubic-bezier(.22, .61, .36, 1) forwards;
+    transform: translateY(12px);
+    animation: reveal .7s cubic-bezier(.22, .61, .36, 1) forwards;
 }
 
-.d1 { animation-delay: .06s; }
-.d2 { animation-delay: .16s; }
-.d3 { animation-delay: .26s; }
-.d4 { animation-delay: .36s; }
-.d5 { animation-delay: .46s; }
+.d1 { animation-delay: .05s; }
+.d2 { animation-delay: .13s; }
+.d3 { animation-delay: .21s; }
+.d4 { animation-delay: .29s; }
+.d5 { animation-delay: .37s; }
 
 @keyframes reveal {
-    to {
-        opacity: 1;
-        transform: none;
-    }
+    to { opacity: 1; transform: none; }
 }
 
 /*
- * Kaydırınca beliren bölümler.
- * Gizleme yalnızca JavaScript çalışıyorsa uygulanır; aksi hâlde içerik
- * ekranda kalır (no-js sınıfı belge yüklenirken kaldırılır).
+ * Kaydırınca beliren bölümler. Gizleme yalnızca JavaScript çalışıyorsa
+ * uygulanır; aksi hâlde içerik ekranda kalır.
  */
 html:not(.no-js) [data-reveal] {
     opacity: 0;
-    transform: translateY(14px);
-    transition: opacity .7s cubic-bezier(.22, .61, .36, 1),
-                transform .7s cubic-bezier(.22, .61, .36, 1);
+    transform: translateY(16px);
+    transition: opacity .6s cubic-bezier(.22, .61, .36, 1),
+                transform .6s cubic-bezier(.22, .61, .36, 1);
 }
 
 html:not(.no-js) [data-reveal].is-visible {
@@ -92,9 +293,7 @@ html:not(.no-js) [data-reveal].is-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
+    html { scroll-behavior: auto; }
 
     .reveal,
     html:not(.no-js) [data-reveal] {
@@ -104,7 +303,5 @@ html:not(.no-js) [data-reveal].is-visible {
         transition: none;
     }
 
-    * {
-        transition: none !important;
-    }
+    * { transition: none !important; }
 }

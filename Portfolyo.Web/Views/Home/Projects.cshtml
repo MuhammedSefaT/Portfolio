@@ -1,41 +1,47 @@
 @{
     ViewData["Title"] = "Projelerim";
+    ViewData["Etiket"] = "Çalışmalar";
+    ViewData["Lede"] = "Her projeyi ne yaptığı, hangi sorunu çözdüğü ve nasıl kurulduğuyla birlikte anlatacağım.";
     ViewData["Description"] = "Üzerinde çalıştığım projeler ve kullandığım yaklaşımlar.";
 }
 
-<header class="reveal d2">
-    <h1 class="display text-[clamp(2.2rem,6.4vw,3.6rem)] font-semibold">
-        Projelerim
-    </h1>
+<partial name="_SayfaBasligi" />
 
-    <p class="mt-6 max-w-[56ch] text-[18px] leading-[1.6] text-slate">
-        Her projeyi ne yaptığı, hangi sorunu çözdüğü ve nasıl kurulduğuyla birlikte
-        anlatacağım. Liste burada toplanacak.
-    </p>
+<section class="bg-white">
+    <div class="kapsayici py-20 lg:py-28">
 
-    <div class="mt-10 h-[3px] w-20 bg-royal" aria-hidden="true"></div>
-</header>
+        <div class="kart mx-auto max-w-3xl p-10 text-center lg:p-14" data-reveal>
 
-<section class="mt-14" data-reveal>
+            <span class="ikon-kutu mx-auto" aria-hidden="true">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5v-9Z" />
+                    <path d="M12 12v9M12 12 3 7.5M12 12l9-4.5" />
+                </svg>
+            </span>
 
-    <div class="border border-dashed border-hairline p-8 sm:p-12">
+            <p class="mt-6 inline-flex items-center gap-2 text-[13px] font-bold uppercase tracking-[.12em] text-brand">
+                <span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
+                Hazırlanıyor
+            </p>
 
-        <p class="flex items-center gap-2.5 text-[14px] font-medium text-ember">
-            <span class="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-ember" aria-hidden="true"></span>
-            Hazırlanıyor
-        </p>
+            <h2 class="baslik-bolum mt-4">Projeler yakında burada</h2>
 
-        <p class="mt-5 max-w-[52ch] text-[17px] leading-[1.65] text-slate">
-            Bu sayfa şu an boş. Projeleri tek tek ekleyene kadar yazdığım koda
-            GitHub üzerinden bakabilirsin.
-        </p>
+            <p class="mx-auto mt-5 max-w-[52ch] text-[16.5px] leading-[1.75]">
+                Bu sayfa şu an boş. Projeleri tek tek ekleyene kadar yazdığım koda
+                GitHub üzerinden bakabilirsiniz.
+            </p>
 
-        <a class="mt-8 inline-flex items-center gap-2 bg-ink px-6 py-3 text-[15px] font-medium text-paper transition-colors hover:bg-royal"
-           href="https://github.com/MuhammedSefaT" target="_blank" rel="noopener">
-            GitHub'daki depolara bak
-            <span aria-hidden="true">→</span>
-        </a>
+            <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+                <a class="dugme dugme-birincil" href="https://github.com/MuhammedSefaT" target="_blank" rel="noopener">
+                    GitHub profilim
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a class="dugme dugme-ikincil" asp-controller="Home" asp-action="Contact">
+                    Proje teklifi gönder
+                </a>
+            </div>
 
+        </div>
     </div>
-
 </section>

@@ -1,13 +1,19 @@
 @{
     ViewData["Title"] = "Gizlilik Politikası";
+    ViewData["Etiket"] = "Yasal";
+    ViewData["Lede"] = "Bu sitede hangi verilerin işlendiğine dair bilgiler bu sayfada yer alacak.";
 }
 
-<section class="reveal d2">
-    <p class="etiket">Gizlilik</p>
+<partial name="_SayfaBasligi" />
 
-    <h1 class="display mt-5 text-[clamp(1.8rem,4.8vw,2.6rem)] font-semibold">Gizlilik Politikası</h1>
-
-    <p class="mt-7 max-w-[54ch] text-[17px] leading-[1.65] text-slate">
-        Sitenin gizlilik politikası bu sayfada yer alacak.
-    </p>
+<section class="bg-white">
+    <div class="kapsayici py-20 lg:py-28">
+        <div class="kart mx-auto max-w-3xl p-10 lg:p-12" data-reveal>
+            <h2 class="text-[19px] font-bold">Hazırlanıyor</h2>
+            <p class="mt-4 text-[16.5px] leading-[1.75]">
+                Sitenin gizlilik politikası metni yakında bu sayfada yayımlanacak.
+            </p>
+            <a class="dugme dugme-ikincil mt-8" asp-controller="Home" asp-action="Index">Ana sayfaya dön</a>
+        </div>
+    </div>
 </section>

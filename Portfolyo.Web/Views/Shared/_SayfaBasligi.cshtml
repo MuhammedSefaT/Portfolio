@@ -1,0 +1,17 @@
+@{
+    var sayfaAdi = ViewData["Title"] as string;
+    var giris = ViewData["Lede"] as string;
+}
+
+<section class="koyu-bolum">
+    <div class="kapsayici py-16 lg:py-20">
+        <p class="reveal d1 etiket etiket-koyu">@(ViewData["Etiket"] as string ?? "Muhammed Sefa Tayaz")</p>
+
+        <h1 class="reveal d2 baslik-dev mt-5 text-white">@sayfaAdi</h1>
+
+        @if (!string.IsNullOrWhiteSpace(giris))
+        {
+            <p class="reveal d3 mt-6 max-w-[62ch] text-[17px] leading-[1.75] text-white/65 lg:text-[18px]">@giris</p>
+        }
+    </div>
+</section>

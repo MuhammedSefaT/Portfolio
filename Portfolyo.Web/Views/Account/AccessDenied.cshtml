@@ -1,13 +1,32 @@
 @{
-    ViewData["Title"] = "Yetkisiz Erişim";
+    ViewData["Title"] = "Yetkisiz erişim";
+    ViewData["Etiket"] = "Erişim";
+    ViewData["Lede"] = "Bu sayfayı görüntülemek için gereken yetkiye sahip değilsiniz.";
 }
 
-<h1 class="reveal d2 display text-[clamp(1.6rem,4.2vw,2.2rem)] font-semibold">Yetkisiz erişim</h1>
-<p class="reveal d3 mt-6 max-w-[52ch] text-[17px] leading-[1.65] text-slate">
-    Bu sayfayı görüntülemek için gereken yetkiye sahip değilsiniz.
-</p>
+<partial name="_SayfaBasligi" />
 
-<div class="reveal d4 mt-8">
-    <a class="text-[15px] text-ink underline decoration-royal/40 decoration-2 underline-offset-[6px] transition-colors hover:decoration-royal"
-       asp-controller="Home" asp-action="Index">Ana sayfaya dön</a>
-</div>
+<section class="bg-white">
+    <div class="kapsayici py-20 lg:py-28">
+        <div class="kart mx-auto max-w-2xl p-10 lg:p-12" data-reveal>
+            <span class="ikon-kutu" aria-hidden="true">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="10" width="16" height="10" rx="2" />
+                    <path d="M8 10V7a4 4 0 1 1 8 0v3" />
+                </svg>
+            </span>
+
+            <h2 class="mt-6 text-[19px] font-bold">Yetki gerekiyor</h2>
+            <p class="mt-4 text-[16.5px] leading-[1.75]">
+                Hesabınızda bu işlem için gerekli izin tanımlı değil. Yanlış bir durum
+                olduğunu düşünüyorsanız bana yazın.
+            </p>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a class="dugme dugme-birincil" asp-controller="Home" asp-action="Index">Ana sayfaya dön</a>
+                <a class="dugme dugme-ikincil" asp-controller="Home" asp-action="Contact">İletişime geç</a>
+            </div>
+        </div>
+    </div>
+</section>

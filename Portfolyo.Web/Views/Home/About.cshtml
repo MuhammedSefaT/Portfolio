@@ -1,109 +1,154 @@
 @{
     ViewData["Title"] = "Hakkımda";
+    ViewData["Etiket"] = "Tanışalım";
+    ViewData["Lede"] = "Arka uçta çalışan bir yazılım geliştiriciyim. Bir sistemin kurallarını netleştirmeyi ve kararları sonradan sökülmeyecek şekilde vermeyi önemsiyorum.";
     ViewData["Description"] = "Muhammed Sefa Tayaz kimdir, nasıl çalışır ve hangi araçları kullanır.";
 }
 
-<header class="reveal d2">
-    <h1 class="display text-[clamp(2.2rem,6.4vw,3.6rem)] font-semibold">
-        Hakkımda
-    </h1>
+<partial name="_SayfaBasligi" />
 
-    <p class="mt-6 max-w-[56ch] text-[18px] leading-[1.6] text-slate">
-        Arka uçta çalışıyorum. Bir sistemin kurallarını netleştirmeyi,
-        kararları sonradan sökülmeyecek şekilde vermeyi seviyorum.
-    </p>
+@* ------------------------------------------------------ Portre ve hikâye *@
+<section class="bg-white">
+    <div class="kapsayici py-20 lg:py-28">
+        <div class="grid gap-14 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-20">
 
-    <div class="mt-10 h-[3px] w-20 bg-royal" aria-hidden="true"></div>
-</header>
+            @* Kendi fotoğrafını eklemek için: wwwroot/img klasörüne koyup src değerini değiştir. *@
+            <figure class="lg:sticky lg:top-28 lg:self-start" data-reveal>
+                <img class="w-full rounded-2xl border border-line object-cover shadow-kart"
+                     src="~/img/portre.svg"
+                     width="800" height="1000"
+                     alt="Muhammed Sefa Tayaz" />
 
-<section class="mt-14 grid gap-12 sm:grid-cols-[17rem_minmax(0,1fr)] sm:items-start sm:gap-14">
+                <figcaption class="kart mt-6 divide-y divide-line">
+                    <div class="flex items-center justify-between gap-4 px-5 py-3.5 text-[14.5px]">
+                        <span class="text-muted">Konum</span>
+                        <span class="font-semibold text-ink">Türkiye</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-4 px-5 py-3.5 text-[14.5px]">
+                        <span class="text-muted">Uzmanlık</span>
+                        <span class="font-semibold text-ink">Arka uç</span>
+                    </div>
+                    <div class="flex items-center justify-between gap-4 px-5 py-3.5 text-[14.5px]">
+                        <span class="text-muted">Arayüz</span>
+                        <span class="font-semibold text-ink">Vue.js</span>
+                    </div>
+                </figcaption>
+            </figure>
 
-    @* Kendi fotoğrafını eklemek için: wwwroot/img klasörüne koyup src değerini değiştir. *@
-    <figure class="reveal d3 sm:sticky sm:top-28">
-        <div class="relative">
-            <span class="absolute -bottom-3 -right-3 h-full w-full border-2 border-royal/25" aria-hidden="true"></span>
-            <img class="relative w-full object-cover"
-                 src="~/img/portre.svg"
-                 width="800" height="1000"
-                 alt="Muhammed Sefa Tayaz" />
+            <div data-reveal>
+                <p class="etiket">Kısaca</p>
+                <h2 class="baslik-bolum mt-5">Sistemin kurallarını netleştirmeyi severim</h2>
+
+                <div class="mt-7 space-y-5 text-[16.5px] leading-[1.8]">
+                    <p>
+                        Bir işe başlarken önce üç soruyu yanıtlıyorum: veri nereye yazılır, kim
+                        neye erişir, bir şey ters gittiğinde ne olur. Bunlar netleşmeden yazılan
+                        kod, sonradan sökülmesi pahalı kararlar demek.
+                    </p>
+                    <p>
+                        .NET ile servis ve API geliştiriyorum. Çok kiracılı yapılarda her
+                        müşterinin verisini birbirinden ayrı tutan katmanları kuruyorum;
+                        yetkilendirmeyi rol ve izin seviyesinde çözüyorum.
+                    </p>
+                    <p>
+                        Arayüz gerektiğinde Vue.js ve Tailwind ile tamamlıyorum. Bu siteyi de
+                        sıfırdan yazıyorum: veritabanı yerine JSON dosyaları, katmanlı bir klasör
+                        yapısı ve testlerle.
+                    </p>
+                </div>
+
+                <div class="mt-10 grid gap-5 sm:grid-cols-2">
+                    <div class="kart p-6">
+                        <span class="ikon-kutu" aria-hidden="true">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="m9 12 2 2 4-4" />
+                                <circle cx="12" cy="12" r="9" />
+                            </svg>
+                        </span>
+                        <h3 class="mt-5 text-[17px] font-bold">Sürdürülebilir kod</h3>
+                        <p class="mt-2 text-[15px] leading-[1.7]">
+                            Altı ay sonra geri dönüldüğünde anlaşılan, değiştirilebilen bir yapı.
+                        </p>
+                    </div>
+
+                    <div class="kart p-6">
+                        <span class="ikon-kutu" aria-hidden="true">
+                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Z" />
+                            </svg>
+                        </span>
+                        <h3 class="mt-5 text-[17px] font-bold">Güvenlik önce</h3>
+                        <p class="mt-2 text-[15px] leading-[1.7]">
+                            Yetkilendirme ve veri yalıtımı sonradan eklenen bir özellik değil.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-
-        <figcaption class="mt-6 space-y-3 text-[14px]">
-            <span class="flex items-baseline justify-between gap-4 border-b border-hairline pb-2">
-                <span class="text-muted">Konum</span>
-                <span class="font-medium text-ink">Türkiye</span>
-            </span>
-            <span class="flex items-baseline justify-between gap-4 border-b border-hairline pb-2">
-                <span class="text-muted">Odak</span>
-                <span class="font-medium text-ink">Arka uç</span>
-            </span>
-            <span class="flex items-baseline justify-between gap-4">
-                <span class="text-muted">Arayüz</span>
-                <span class="font-medium text-ink">Vue.js</span>
-            </span>
-        </figcaption>
-    </figure>
-
-    <div class="reveal d4 max-w-[58ch] space-y-5 text-[17px] leading-[1.7] text-slate">
-        <p>
-            Bir işe başlarken önce üç soruyu yanıtlıyorum: veri nereye yazılır, kim neye
-            erişir, bir şey ters gittiğinde ne olur. Bunlar netleşmeden yazılan kod,
-            sonradan sökülmesi pahalı kararlar demek.
-        </p>
-        <p>
-            .NET ile servis ve API geliştiriyorum. Çok kiracılı yapılarda her müşterinin
-            verisini birbirinden ayrı tutan katmanları kuruyorum; yetkilendirmeyi rol ve
-            izin seviyesinde çözüyorum.
-        </p>
-        <p>
-            Arayüz gerektiğinde Vue.js ve Tailwind ile tamamlıyorum. Bu siteyi de sıfırdan
-            yazıyorum: veritabanı yerine JSON dosyaları, katmanlı bir klasör yapısı ve
-            testlerle.
-        </p>
     </div>
-
 </section>
 
-<section class="mt-24 border-t border-hairline pt-12 sm:mt-32" data-reveal>
+@* ------------------------------------------------------------- Araçlar *@
+<section class="border-t border-line bg-surface">
+    <div class="kapsayici py-20 lg:py-28">
 
-    <h2 class="display text-[clamp(1.5rem,3.6vw,2rem)] font-semibold">Kullandığım araçlar</h2>
-
-    <div class="mt-10 grid gap-8 sm:grid-cols-3">
-
-        <div class="border-t-2 border-royal pt-5">
-            <h3 class="text-[15px] font-semibold text-ink">Arka uç</h3>
-            <ul class="mt-4 space-y-2 text-[15px] text-slate">
-                <li>C#</li>
-                <li>.NET</li>
-                <li>ASP.NET Core MVC</li>
-            </ul>
+        <div class="max-w-2xl" data-reveal>
+            <p class="etiket">Teknoloji</p>
+            <h2 class="baslik-bolum mt-5">Kullandığım araçlar</h2>
         </div>
 
-        <div class="border-t-2 border-royal/60 pt-5">
-            <h3 class="text-[15px] font-semibold text-ink">Arayüz</h3>
-            <ul class="mt-4 space-y-2 text-[15px] text-slate">
-                <li>Vue.js</li>
-                <li>Tailwind CSS</li>
-                <li>JavaScript</li>
-            </ul>
-        </div>
+        <div class="mt-12 grid gap-6 md:grid-cols-3" data-reveal>
 
-        <div class="border-t-2 border-ember/60 pt-5">
-            <h3 class="text-[15px] font-semibold text-ink">Test ve araçlar</h3>
-            <ul class="mt-4 space-y-2 text-[15px] text-slate">
-                <li>xUnit</li>
-                <li>Git</li>
-                <li>AutoMapper</li>
-                <li>FluentValidation</li>
-            </ul>
-        </div>
+            <div class="kart p-7">
+                <h3 class="text-[17px] font-bold">Arka uç</h3>
+                <div class="mt-5 flex flex-wrap gap-2.5">
+                    <span class="rozet">C#</span>
+                    <span class="rozet">.NET</span>
+                    <span class="rozet">ASP.NET Core MVC</span>
+                </div>
+            </div>
 
+            <div class="kart p-7">
+                <h3 class="text-[17px] font-bold">Arayüz</h3>
+                <div class="mt-5 flex flex-wrap gap-2.5">
+                    <span class="rozet">Vue.js</span>
+                    <span class="rozet">Tailwind CSS</span>
+                    <span class="rozet">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="kart p-7">
+                <h3 class="text-[17px] font-bold">Test ve araçlar</h3>
+                <div class="mt-5 flex flex-wrap gap-2.5">
+                    <span class="rozet">xUnit</span>
+                    <span class="rozet">Git</span>
+                    <span class="rozet">AutoMapper</span>
+                    <span class="rozet">FluentValidation</span>
+                </div>
+            </div>
+
+        </div>
     </div>
+</section>
 
-    <a class="mt-14 inline-flex items-center gap-2 bg-ink px-6 py-3 text-[15px] font-medium text-paper transition-colors hover:bg-royal"
-       asp-controller="Home" asp-action="Contact">
-        Benimle iletişime geç
-        <span aria-hidden="true">→</span>
-    </a>
+@* ------------------------------------------------------------- CTA bandı *@
+<section class="koyu-bolum">
+    <div class="kapsayici py-16 lg:py-20">
+        <div class="flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between" data-reveal>
+            <div>
+                <h2 class="baslik-bolum text-white">Birlikte çalışalım mı?</h2>
+                <p class="mt-4 max-w-[52ch] text-[17px] leading-[1.7] text-white/65">
+                    Aklınızdaki projeyi konuşmak için bana yazmanız yeterli.
+                </p>
+            </div>
 
+            <a class="dugme dugme-beyaz shrink-0" asp-controller="Home" asp-action="Contact">
+                İletişime geç
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+    </div>
 </section>

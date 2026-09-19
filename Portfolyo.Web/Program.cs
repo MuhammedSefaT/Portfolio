@@ -1,7 +1,12 @@
+using Portfolyo.Web.Infrastructure.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// JSON dosya deposu, repository'ler ve UnitOfWork
+builder.Services.AddInfrastructure(builder.Environment);
 
 var app = builder.Build();
 
